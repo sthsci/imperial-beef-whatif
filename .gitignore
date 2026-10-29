@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# LaTeX build products (PDFs in paper/ are kept deliberately)
+paper/*.aux
+paper/*.bbl
+paper/*.bcf
+paper/*.blg
+paper/*.fdb_latexmk
+paper/*.fls
+paper/*.log
+paper/*.out
+paper/*.run.xml
+paper/*.synctex.gz
+paper/*.toc
+paper/*.xdv
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/

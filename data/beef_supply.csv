@@ -1,0 +1,19 @@
+# Origin x production-system mix of beef consumed in the UK (2024) and farm-gate footprints.
+# share: fraction of UK consumption (cwe). UK production net of exports = 72% of consumption (Defra AUK 2025:
+#   production 929 kt, imports 307 kt, exports 142 kt); about half of UK beef comes from the dairy herd (CIEL 2020);
+#   Ireland supplied 77% of imports in 2024 (AHDB via Irish Farmers Journal); remainder split by assumption.
+# ef_cwe: kg CO2e per kg carcass weight, cradle to farm gate (GWP100 AR5, CH4 = 28), central with 90% range.
+#   UK suckler: PRISM/Agrecalc 2024 lowland/upland suckler 30.8-31.4, Defra/CIEL beef herd 25.3.
+#   UK dairy-origin: Defra/CIEL dairy herd 10.7 (cull cows, allocation to milk) to PRISM dairy-cross finishers 22.9.
+#   Ireland / other Europe / Oceania: FAO GLEAM regional values (W. Europe 17.3-21.7) and Bord Bia scheme data.
+#   South America: GLEAM Latin America incl. land-use change (~24 of the total); P&N show far higher tails.
+# avoidable_frac: share of the farm-gate footprint that disappears when the beef is no longer demanded
+#   (consequential view; dairy-origin beef keeps the cow's share, which is re-allocated to milk). Assumption.
+# f_*: greenhouse-gas composition of the farm-gate footprint (FAO 2013 profile adjusted for no land-use change in the UK).
+segment,label,share,ef_cwe,ef_cwe_low,ef_cwe_high,avoidable_frac,avoidable_low,avoidable_high,f_co2,f_ch4,f_n2o,source
+uk_suckler,UK suckler herd,0.360,28.0,20.0,38.0,1.00,0.90,1.00,0.15,0.62,0.23,ciel2020;prism2024
+uk_dairy,UK dairy-origin,0.360,16.0,10.0,24.0,0.70,0.50,0.90,0.18,0.58,0.24,ciel2020;prism2024
+ireland,Ireland,0.216,20.0,14.0,30.0,0.85,0.70,1.00,0.15,0.62,0.23,gerber2013;bordbia2024
+other_europe,Other Europe,0.035,22.0,14.0,35.0,0.75,0.50,0.95,0.20,0.55,0.25,gerber2013
+oceania,Australia & New Zealand,0.015,25.0,15.0,45.0,1.00,0.90,1.00,0.18,0.57,0.25,gerber2013
+south_america,South America,0.015,60.0,30.0,150.0,1.00,0.90,1.00,0.45,0.38,0.17,gerber2013;poore2018

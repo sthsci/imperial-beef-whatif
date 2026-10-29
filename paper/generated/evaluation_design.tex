@@ -1,0 +1,24 @@
+Nine outcomes, how to measure them and how to identify the policy's effect are listed in Supplementary Table~\ref{tab:evaluation}. Three points matter most for Imperial.
+\begin{enumerate}
+\item \textbf{Counterfactual trends.} Meat purchases were rising before the ban (Supplementary Table~\ref{tab:foi}), so effects must be estimated against pre-trends (interrupted time series) or comparison outlets that kept beef (outsourced outlets until 2031), not as before--after differences. The simultaneous cut in meat portions from 120 to 100\,g is a confounder that needs its own term.
+\item \textbf{Leakage cannot be measured on campus.} Off-campus purchases need panel data (consented card or diary data). Market leakage needs the equilibrium model of Supplementary Note~9, because the campus is far too small to move prices measurably.
+\item \textbf{Power.} Detecting a change of 0.5\,mg/day in zinc intake (SD 3.5\,mg/day) with 80\% power at $\alpha=0.05$ needs $n = 2(z_{0.975}+z_{0.80})^2\sigma^2/\delta^2 = 770$ participants per group. This is feasible only if recruitment targets frequent campus diners, because the average change across all students is an order of magnitude smaller.
+\end{enumerate}
+\begin{table}[H]\centering\scriptsize
+\caption{\textbf{Evaluation framework for the campus beef policy.}}\label{tab:evaluation}
+\begin{tabular}{>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}p{3.4cm}>{\raggedright\arraybackslash}p{4.6cm}}
+\toprule
+Outcome & Metric & Data & Identification \\
+\midrule
+Campus purchases and emissions & kg purchased by product; t \COtwoe{} (attributional) & Procurement / FOI line items & Interrupted time series with pre-trends; DiD vs. outsourced outlets \\
+Dish choice and substitution & Shares of meat, fish, vegetarian, vegan dishes & Till data with anonymised card IDs & Event study around Oct 2024; nested-logit demand estimation \\
+Off-campus leakage & Campus meals per regular diner; beef meals bought elsewhere & Card panel; consented spending diaries; short surveys & Panel DiD; bounds from footfall changes \\
+Market leakage & Pass-through $\phi$ & Published elasticities; trade data & Equilibrium displacement model; consequential LCA \\
+Nutrient intake & Protein, iron, zinc, B\textsubscript{12}, fibre, saturated fat & Repeated 24-h recalls (Intake24) & Pre/post with comparison university; usual-intake modelling \\
+Nutrient status & Ferritin, haemoglobin, holotranscobalamin, plasma zinc & Biomarker subsample & Pre/post in frequent beef eaters vs. others \\
+Satisfaction & Meal satisfaction, perceived choice, complaints & Validated survey scales; free text & Repeated cross-sections; DiD \\
+Welfare & Compensating variation (£ per meal) & Revealed choices; discrete-choice experiment & Logit log-sum; stated willingness to pay to restore beef \\
+Equity & Effects by sex, culture, income, sport & Linked survey and till data & Heterogeneous treatment effects \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,20 @@
+# UK dietary reference values, adults 19-50 y. RNI = Reference Nutrient Intake (COMA 1991; DH 1991);
+# LRNI = Lower RNI. Energy: reference intakes (2000/2500 kcal). Fibre: SACN (2015) 30 g/day.
+# Saturated fat: reference intake (20 g, women) / 30 g (men) ~ 11% of energy. Sodium: 2.4 g (6 g salt).
+# Niacin RNI expressed at the reference energy intakes (6.6 mg/1000 kcal); B6 at 15 ug/g protein.
+nutrient,label,kind,women,men,lrni_women,lrni_men,source
+energy_kcal,Energy,reference,2000,2500,,,dh1991
+protein_g,Protein,RNI,45.0,55.5,,,dh1991
+iron_mg,Iron,RNI,14.8,8.7,8.0,4.7,dh1991
+zinc_mg,Zinc,RNI,7.0,9.5,4.0,5.5,dh1991
+b12_ug,Vitamin B12,RNI,1.5,1.5,1.0,1.0,dh1991
+niacin_mg,Niacin,RNI,13.0,17.0,,,dh1991
+b6_mg,Vitamin B6,RNI,1.2,1.4,,,dh1991
+riboflavin_mg,Riboflavin,RNI,1.1,1.3,0.8,0.8,dh1991
+selenium_ug,Selenium,RNI,60,75,40,40,dh1991
+phosphorus_mg,Phosphorus,RNI,550,550,,,dh1991
+potassium_mg,Potassium,RNI,3500,3500,2000,2000,dh1991
+calcium_mg,Calcium,RNI,700,700,400,400,dh1991
+fibre_g,Fibre,target,30,30,,,sacn2015
+satfat_g,Saturated fat,maximum,20,30,,,dh1991
+sodium_mg,Sodium,maximum,2400,2400,,,sacn2003

@@ -1,0 +1,515 @@
+\documentclass[10pt]{article}
+\input{preamble}
+\input{generated/numbers}
+
+\begin{document}
+
+%======================================================================== title
+\begin{center}
+{\sffamily\bfseries\LARGE \PaperTitle\par}
+\vspace{8pt}
+{\sffamily\large \PaperAuthor\textsuperscript{1}\par}
+\vspace{3pt}
+{\sffamily\small \textsuperscript{1}Imperial College London, London, UK\par}
+\end{center}
+\vspace{4pt}
+
+%==================================================================== summary
+\noindent\textbf{Universities are removing beef from their menus to cut emissions, but three
+questions are usually left open. Can the nutrients in beef be replaced, and by what?
+How large is the climate benefit at the scale of a city? How much of a single
+institution's ban reaches the atmosphere once diners and markets respond? We answer
+them for London and for Imperial College London, which removed beef from its in-house
+catering in October 2024. Beef's protein is easy to replace, but its absorbable zinc and
+vitamin~B\textsubscript{12} are not: no combination of non-ruminant foods matches them within
+twice beef's energy without fortified foods or supplements. Nutritionally equivalent
+baskets emit \ReductionMin--\ReductionMax\% less than the beef they replace (\PerHundredUkAttr{}\,kg
+\COtwoe{} per 100\,g cooked beef for the UK supply mix). If every Londoner replaced beef
+this way, consumption-based emissions would fall by \LondonDeltaMc{}\,Mt \COtwoe{} a year. That
+is equivalent to \PctLeggiMc{} of London's territorial inventory, although almost all of the
+saving occurs outside London's boundary. For Imperial, market leakage and off-campus
+purchasing cut the long-run reduction to \CampusLrNet{}\,t \COtwoe{} a year, \CampusNetVsAcctLr\% of
+what procurement accounting would report, and to \CampusSrNet{}\,t in the short run. At
+prices held fixed, the implied welfare cost to diners is about \CostPerT{} per tonne avoided,
+several times the UK government's carbon value. Removing beef cuts emissions when a
+whole population changes what it eats; a single campus achieves much less than its
+inventory suggests.}
+
+\vspace{6pt}
+%=================================================================== intro
+Food systems account for about a third of anthropogenic greenhouse-gas
+emissions\cite{crippa2021}. Ruminant meat is their most emission-intensive major product: per kilogram or
+per gram of protein, beef from dedicated beef herds emits roughly ten times more than poultry
+or pork and fifty times more than pulses\cite{poore2018}. Diet change is therefore part of every
+pathway that keeps warming near 1.5--2\,\textdegree{}C\cite{clark2020,springmann2018,willett2019}, and UK
+vegans' dietary footprints are about a quarter of those of high meat-eaters\cite{scarborough2023}.
+Institutions have acted on this. The University of Cambridge's catering service removed beef and
+lamb in 2016 and reported a third less \COtwoe{} per kilogram of food purchased\cite{cambridge2019}.
+Goldsmiths, University of London, banned beef in 2019\cite{goldsmiths2019}. Imperial College
+London adopted a policy in 2022 to phase beef out of its catering\cite{imperial2022policy}. Its
+in-house caterer, Taste Imperial, removed beef from every menu in October 2024, after finding that
+fresh meat was 8\% of catering purchases but 40\% of catering emissions\cite{imperial2024beef}.
+
+Such policies raise three questions that are rarely answered together. The first is biological:
+beef is a dense source of high-quality protein, haem iron, zinc and vitamin~B\textsubscript{12}, so
+can the same nutrition be obtained from other foods, which ones, and in what amounts? The
+second is about emissions: if beef were replaced by nutritionally equivalent foods, how large
+would the change be, in percentage terms, in tonnes of \COtwoe{}, and relative to the emissions of
+a city such as London? The third is economic. A campus is a tiny buyer in a large market, so
+when it stops buying beef the price falls slightly, other consumers buy more, and some diners
+buy beef elsewhere. How much of the accounting saving survives, and what does the policy cost
+the people who eat on campus? We address all three with one open, reproducible model chain
+(Methods). It links food composition and diet optimisation to life-cycle emissions, a market
+equilibrium model and a discrete-choice welfare model, and it uses Imperial's own purchase records.
+
+%=================================================================== results 1
+\section{Beef's nutrients can be replaced, but not one-for-one}
+
+A 100\,g portion of cooked lean beef mince supplies \BeefKcal{}\,kcal, \BeefProtein{}\,g of protein with
+a digestible indispensable amino acid score (DIAAS) of 0.99\cite{bailey2020}, \BeefIron{}\,mg of iron of
+which about two-thirds is haem, \BeefZinc{}\,mg of zinc, \BeefBtwelve{}\,\textmu g of vitamin~B\textsubscript{12} and
+\BeefSelenium{}\,\textmu g of selenium. After adjusting for bioavailability (Methods), these are
+\BeefProteinQ{}\,g of quality-adjusted protein, \BeefIronAbs{}\,mg of absorbable iron, \BeefZincAbs{}\,mg of
+absorbable zinc and \BeefBtwelveAbs{}\,\textmu g of absorbable B\textsubscript{12}. In the UK, meat and meat
+products supply about a third of adults' zinc, over a quarter of their vitamin~B\textsubscript{12} and
+about a fifth of their iron\cite{ndns2020}. A quarter of women aged 19--64 already have iron intakes
+below the lower reference nutrient intake\cite{ndns2020}.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{../figures/fig1_nutrition.pdf}
+\caption{\textbf{What it takes to replace the nutrients in 100\,g of cooked beef.} \textbf{a},
+Grams of each food (as eaten) that supply the same amount of each nutrient as 100\,g of cooked
+lean beef mince. Asterisks mark bioavailability-adjusted nutrients (DIAAS-weighted protein,
+absorbable iron, zinc and vitamin~B\textsubscript{12}). Hatched cells: the food contains none of the
+nutrient. The right-hand column gives the amount needed to match all ten nutrients at once.
+\textbf{b}, Minimum-emission baskets from linear programmes that match the key nutrients
+(quality-adjusted protein, absorbable iron, zinc and B\textsubscript{12}, and selenium) within twice
+beef's energy, with saturated fat and sodium capped. The upper five use foods only; the lower four
+must be fully equivalent and may use B\textsubscript{12} and zinc tablets. Labels give emissions per
+100\,g of beef replaced, energy relative to beef, supplements used and any remaining shortfall.}
+\label{fig:nutrition}
+\end{figure}
+
+Protein is the easy part (\figref{fig:nutrition}a). Chicken breast matches beef's quality-adjusted
+protein with \EqChickenProtein{}, tofu with \EqTofuProtein{} and mycoprotein with \EqMycoproteinProtein{}.
+Cooked lentils need \EqLentilsProtein{} because their DIAAS is low\cite{nosworthy2017}. Zinc and
+vitamin~B\textsubscript{12} are the binding nutrients. Matching beef's absorbable zinc takes \EqChickenZinc{}
+of chicken breast, \EqPorkZinc{} of pork loin and \EqLentilsZinc{} of lentils. The phytate in pulses
+roughly halves zinc absorption\cite{efsa2014zinc}. The exceptions are mycoprotein (\EqMycoproteinZinc{}),
+whose zinc content is high and which contains almost no phytate\cite{finnigan2019,mayerlabba2022},
+and pumpkin seeds (\EqSeedsZinc{}, but over 900\,kcal). Vitamin~B\textsubscript{12} occurs naturally only in
+animal foods. Matching it takes \EqSalmonBtwelve{} of salmon, \EqMilkBtwelve{} of milk, \EqChickenBtwelve{} of
+chicken or \EqEggBtwelve{} of egg, whose B\textsubscript{12} is poorly absorbed\cite{watanabe2007}. It takes
+\EqCerealBtwelve{} of fortified cereal, and no amount of any unfortified plant food. Of the nineteen
+alternatives, only wild venison (\EqVenisonAll{}) and pork loin (\EqPorkAll{}) match all ten nutrients in
+less than half a kilogram. Imperial's own substitutes included venison and pork\cite{imperial2026progress}.
+
+Optimising combinations of foods tells the same story (\figref{fig:nutrition}b, Table~\ref{tab:baskets}).
+Using foods alone and staying within twice beef's energy, no diet without ruminant meat matches all
+the key nutrients. Poultry and pork alone leave B\textsubscript{12} \BasketMeatSwapShort{}. The best omnivore
+basket (salmon, milk, lentils, mycoprotein and fortified cereal) is still short by 23\% and needs
+\MinEnergyOmnivore{} times beef's energy to close the gap. Vegetarian and vegan food-only baskets cannot
+close it at any energy level given realistic portion caps. Adding a vitamin~B\textsubscript{12} tablet, and
+in some cases a small zinc supplement, changes this. All four nutritionally equivalent baskets,
+poultry/pork-led, fish-led, dairy/egg-led and plant-based, then match every key nutrient. They use
+228--296\,g of food and 1.5--1.8 times beef's energy. For example, the plant-based basket is
+\BasketEqVeganDesc{}. These baskets also deliver more fibre, potassium and phosphorus and less saturated fat
+than beef. The dairy/egg-led and plant-based baskets supply less niacin and vitamin
+B\textsubscript{6}, partly because these are not reported for mycoprotein (Supplementary Table~5).
+Both are plentiful in UK diets. The answer to the biological question is therefore qualified. The same
+nutrition is obtainable, mainly from pulses, mycoprotein, fish, eggs, dairy and lean meats, but it
+takes about two to three times the food mass and 50--80\% more energy. Matching beef's absorbable
+B\textsubscript{12} and zinc in practice requires fortified foods or supplements. This is consistent with
+the lower zinc and B\textsubscript{12} status observed in vegetarians and vegans\cite{foster2013,neufingerl2022}.
+
+\begin{table}[t]
+\centering\footnotesize
+\caption{\textbf{Baskets replacing 100\,g of cooked beef.} Minimum-emission solutions with the key
+nutrients as targets and energy capped at \LpEnergyMaxRatio{} times beef's. ``kcal $\times$'' is the
+basket's energy relative to beef. ``min. kcal $\times$'' is the least energy at which the scenario can
+match all key nutrients (``none'': impossible with realistic portions). Beef itself emits
+\PerHundredUkAttr{}\,kg \COtwoe{} per 100\,g (UK supply mix).}
+\label{tab:baskets}
+\input{generated/tab_main_baskets.tex}
+\end{table}
+
+%=================================================================== results 2
+\section{Equivalent nutrition with a tenth of the emissions}
+
+We built the emission factor of beef eaten in the UK from its origin and production system
+(Methods; Extended Data Fig.~\ref{fig:ef}). About 72\% of supply is home-produced, roughly half of
+it from the dairy herd\cite{defra2025auk,ciel2020}, and most imports come from Ireland. Farm
+footprints were taken from UK and FAO data\cite{ciel2020,prism2024,gerber2013} and converted to retail
+weight. The result is \EfBeefUkAttr{}\,kg \COtwoe{} per kg of retail beef, close to Poore and Nemecek's
+average for UK producers (\EfBeefPnUk{}\,kg) and about half their global average of
+\EfBeefPnMix{}\,kg for the same herd mix\cite{poore2018}. A 100\,g portion of cooked beef therefore
+carries \PerHundredUkAttr{}\,kg \COtwoe{} (Monte Carlo 90\% interval \PerHundredBeefMc{}). The
+nutritionally equivalent baskets carry 0.36--1.58\,kg, even though we deliberately used global mean
+footprints for every alternative food, which overstates UK-sourced pulses, poultry and dairy
+(\figref{fig:emissions}a). Replacing beef with equivalent nutrition therefore cuts the associated
+emissions by \ReductionMin--\ReductionMax\%. The fish-led basket saves least (\PctVsBeefEqFish\%) and
+the plant-based basket most (\PctVsBeefEqVegan\%).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{../figures/fig2_emissions.pdf}
+\caption{\textbf{Emissions of beef and of its nutritionally equivalent replacements.}
+\textbf{a}, kg \COtwoe{} per 100\,g of cooked beef, or per basket that replaces it. Dots are
+Monte Carlo medians and lines 90\% intervals. ``UK supply mix'' combines six origin-by-system
+segments; ``global'' uses Poore and Nemecek's distributions for beef- and dairy-herd beef.
+\textbf{b}, Annual change in London's emissions if all beef eaten by Londoners were replaced
+by each basket. Attributional accounting counts beef's full footprint; consequential accounting
+counts only emissions that disappear when demand stops (dairy-origin beef keeps the cow's share).
+Text gives the attributional median as a share of London's 2023 territorial inventory (LEGGI).
+\textbf{c}, Cumulative change in warming-equivalent emissions after London stops eating beef,
+under GWP\textsubscript{100} and under GWP*, which treats methane as a short-lived pollutant.}
+\label{fig:emissions}
+\end{figure}
+
+Scaling up uses the national supply balance. The UK consumes \CweKg{}\,kg of beef per person
+a year in carcass-weight terms\cite{defra2025auk}, which corresponds to \FlowRetail{}\,kg bought
+at retail and \FlowEaten{}\,kg eaten cooked (\FlowEatenGDay{}\,g a day). That beef emits \BeefPcKg{}\,kg
+\COtwoe{} per person a year. The equivalent baskets save \DeltaPcEqFish--\DeltaPcEqVegan{}\,kg per person,
+about \PctDiet\% of an average UK diet's footprint\cite{scarborough2014}. For London's \PopLondonM{}
+million residents\cite{ons2025pop}, beef consumption emits \LondonBeefMt{}\,Mt \COtwoe{} a year.
+Replacing it with equivalent nutrition would cut emissions by \LondonDeltaMin--\LondonDeltaMax{}\,Mt a
+year, or \LondonDeltaMc{}\,Mt for the poultry/pork-led basket including all parameter uncertainty
+(\figref{fig:emissions}b). This is equivalent to \PctLeggiMin--\PctLeggiMax\% of London's
+\Leggi{}\,Mt territorial inventory for 2023\cite{leggi2025} and \PctCbeMin--\PctCbeMax\% of its
+\Cbe{}\,Mt consumption-based footprint\cite{gla2024cbe}. With global-average beef footprints the
+saving doubles to \LondonDeltaPnMin--\LondonDeltaPnMax{}\,Mt (\PctLeggiPnMin--\PctLeggiPnMax\% of
+LEGGI). Counting only consequential emissions, the saving is \LondonDeltaMcConseq{}\,Mt.
+Nationally the change is about \UkDelta{}\,Mt a year, or \PctUkTerr\% of UK territorial emissions.
+For comparison, enteric fermentation by UK beef cattle alone emits \UkBeefEnteric{}\,Mt\cite{desnz2026ghg}.
+The largest source of uncertainty is how much beef people eat: survey-based intakes are about a
+third lower than the supply balance implies\cite{stewart2021} (Extended Data Fig.~\ref{fig:tornado}).
+
+How these numbers should be read matters. The ``percentage of London'' is a comparison of
+magnitudes, not a reduction in London's inventory. LEGGI counts emissions inside the city
+boundary, and London's livestock emits only about 0.01\,Mt\cite{leggi2025}. Almost all of the saving
+would occur on farms in the UK, Ireland and further afield. The consumption-based comparison is
+the like-for-like one: equivalent to a 3--4\% cut in everything Londoners' consumption causes, or
+about a third of the 9.8\,Mt attributed to their food\cite{gla2024cbe}. The choice of climate metric
+also matters, because \BeefGasChFour\% of beef's footprint is methane. Under GWP\textsubscript{20} the saving
+doubles (\GwpTwentyDelta{}\,Mt). Under GWP*, which represents the effect of a sustained change in
+methane emission rate on warming\cite{cain2019gwpstar,smith2021gwpstar}, removing London's
+\LondonChFourKt{}\,kt of annual beef methane gives a cumulative warming-equivalent reduction of
+\CumStarTwenty{}\,Mt after 20 years. That is \CumStarRatioTwenty{} times the GWP\textsubscript{100} figure, and the two
+converge after a century (\figref{fig:emissions}c). Whether GWP* is appropriate for attributing
+responsibility is debated\cite{rogelj2019,lynch2020}, but it shows that ending a methane source buys
+near-term cooling. Finally, land freed from beef could store carbon. Searchinger and colleagues'
+carbon opportunity cost of 144\,kg \COtwoe{} per kg of beef\cite{searchinger2018} would add roughly
+\CocLondonMt{}\,Mt a year for London's consumption. That is far larger than the production emissions,
+but realising it requires the freed land to be restored\cite{hayek2021}, so we do not count it in the
+headline numbers.
+
+%=================================================================== results 3
+\section{A campus ban is diluted by diners and markets}
+
+Taste Imperial bought \FoiBeefTwentyTwo{}\,t of beef in 2022/23 and \FoiBeefTwentyThree{}\,t in 2023/24,
+and \FoiBeefTwentyFour{}\,t after removal (freedom-of-information records\cite{imperialfoi};
+Supplementary Note~1). At 120\,g per portion this is about \CampusBeefMeals{} beef meals a year. A
+procurement inventory would book the removal of \CampusLrGross{}\,t \COtwoe{} a year, minus the
+replacement dishes: \CampusLrAcct{}\,t net. That is \CampusPctImperial\% of Imperial's \ImperialTotalKt{}\,kt
+footprint\cite{imperial2025annual} and about \CampusPctCatering\% of its catering emissions. Two responses
+outside the campus reduce this saving (\figref{fig:campus}).
+
+First, some diners buy beef elsewhere. Evidence from canteens suggests this is small. Beef-free
+days at German universities did not change total or main-dish sales\cite{merk2024}. Doubling
+vegetarian availability in Cambridge colleges showed no rebound at the evening meal\cite{garnett2019}.
+Removing meat options in Oxford left sales at eleven nearby cafeterias unchanged\cite{pechey2022}. By
+contrast, whole meat-free days at a Swiss university cut on-campus sales by 17\%\cite{russo2025}. We
+assume 7\% of forgone beef meals are bought as beef off campus (Supplementary Table~15), which adds
+back \CampusLrOff{}\,t.
+
+Second, and more important, beef that Imperial no longer buys does not simply stay unproduced. In
+an integrated market, a fall in demand lowers the price slightly and other buyers absorb part of
+the freed supply. Only the share $\phi=\eta/(\eta-\varepsilon)$ of the demand cut reaches production,
+where $\eta$ is the supply elasticity and $\varepsilon$ the demand elasticity\cite{alston1995science,norwood2011}.
+With UK beef demand elasticity of $-0.59$\cite{tiffin2011} and US-based supply elasticities of about
+0.1--0.4 within a year and 1--5 within a decade\cite{usda2015cool,suh2017}, our multi-market
+equilibrium model gives a beef pass-through of \CampusPassLr{} in the long run and \CampusPassSr{} in the
+short run (\figref{fig:campus}a). The long-run value is close to Norwood and Lusk's widely used
+estimate of 0.68\cite{norwood2011}. Market leakage therefore adds back \CampusLrLeak{}\,t in the long
+run. Replacement foods add \CampusLrSubs{}\,t, and their own market adjustment removes
+\CampusLrSubsAdj{}\,t.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{../figures/fig3_campus.pdf}
+\caption{\textbf{From campus purchases to atmospheric emissions.} \textbf{a}, Share of a demand cut
+that reaches production, $\phi=\eta/(\eta-\varepsilon)$, as a function of supply ($\eta$) and demand
+($\varepsilon$) elasticities. Markers show beef in the short and long run. \textbf{b}, Decomposition of
+the annual emissions change from removing beef at Imperial (long-run Monte Carlo medians). Grey
+bars show net outcomes, with 90\% intervals, and what procurement accounting would report.
+\textbf{c}, Distributions of the net change (\NCampus{} draws).}
+\label{fig:campus}
+\end{figure}
+
+The net long-run effect is a reduction of \CampusLrNet{}\,t \COtwoe{} a year (90\% interval
+\CampusLrNetLo--\CampusLrNetHi{}\,t). This is \CampusNetVsGrossLr\% of the beef's own footprint and
+\CampusNetVsAcctLr\% of what the inventory would report. In the first year the reduction is only
+\CampusSrNet{}\,t (\CampusSrNetLo--\CampusSrNetHi{}\,t). Because the replacement food's emissions are
+about a quarter of the beef's, the ban reduces emissions only if pass-through exceeds
+\CampusPhiStar{} (Extended Data Fig.~\ref{fig:campusgrid}). If beef production did not respond at all,
+the policy would increase emissions by about \CampusNoResponse{}\,t a year. At city scale the change,
+about \CampusPpmLondon{} parts per million of London's territorial emissions, is too small to measure.
+Imperial's own records illustrate a further difficulty for evaluation. Chicken and pork purchases
+were already rising by about 12\,t and 2\,t a year before the ban, and they kept rising afterwards
+(\FoiChickenTwentyFour{}\,t and \FoiPorkTwentyFour{}\,t in 2024/25). The emissions embodied in all meat
+purchases fell from \FoiMeatTTwentyThree{}\,t to \FoiMeatTTwentyFour{}\,t, but a before--after comparison
+would mix the policy with these trends (Supplementary Note~12).
+
+%=================================================================== results 4
+\section{What the ban costs diners, and what it does to their diets}
+
+With food prices held fixed, the only change for diners is a smaller choice set. In a random-utility
+model of dish choice, removing an option lowers each diner's expected utility by a log-sum
+amount\cite{small1981,train2009}. We calibrate the model to a beef-dish own-price elasticity of about
+$-1.5$\cite{garnett2021,salvi2025} and beef's \PBeefPct\% share of main meals. The loss per forgone beef
+meal is then \WelfareLossMeal{} (\figref{fig:students}a). Calibrated this way, the loss is almost
+exactly the meal price divided by the dish elasticity, whatever the strength of substitution
+within the meat nest (Supplementary Note~10). Because diners can always buy beef off campus, we
+also cap the loss at the cost of doing so, which gives \WelfareLossMealCapped{} per meal. Across
+\CampusBeefMeals{} beef meals the annual welfare loss is \WelfareLossCappedTotal{} (capped). The
+monetised climate benefit, at the UK's central carbon value of £\CarbonValue{} per tonne
+\cite{desnz2023carbon}, is \BenefitTotal{} (\figref{fig:students}b). The implied cost is \CostPerT{} per
+tonne avoided (capped: \CostPerTCapped{}). The welfare loss exceeds the climate benefit in essentially
+all Monte Carlo draws. The ban would break even only if diners valued a beef meal at no more than
+£\BreakEvenLossMeal{} over their next-best option.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{../figures/fig4_students.pdf}
+\caption{\textbf{Consequences for diners.} \textbf{a}, Welfare loss per forgone beef meal from a
+nested-logit model calibrated to the own-price elasticity of a beef dish, for three meal prices.
+The grey band is the cost of buying beef off campus instead, which caps the loss. \textbf{b},
+Annual welfare loss with prices held fixed, compared with the monetised long-run climate benefit
+at the UK central carbon value (medians and 90\% intervals). \textbf{c}, Change in average daily
+intake for someone who ate beef on campus \FreqMeals{} times a week, expressed as a share of UK
+reference values (RNI; fibre target; maximum for saturated fat and sodium).}
+\label{fig:students}
+\end{figure}
+
+This welfare estimate should be read as an upper bound on private cost rather than a verdict. It
+ignores habit formation, which erodes the loss over time. It ignores any value diners place on
+eating more sustainably. It also ignores health benefits of eating less red meat that diners do
+not fully take into account. All three can be measured (Supplementary Note~12). It is nonetheless
+consistent with other evidence that bans are a costly way to change diets: a one-off climate
+lecture reduced students' meat consumption for three years at about US\$14 per tonne\cite{jalil2023},
+and carbon labels\cite{lohmann2022} and more vegetarian options\cite{garnett2019,becker2026} reduce
+emissions while keeping choice.
+
+The nutritional consequences for diners are small on average but not for everyone
+(\figref{fig:students}c). Each forgone beef meal, replaced by Imperial's observed mix of chicken,
+pork, venison, fish, vegetarian and vegan dishes, provides \DeltaProteinMeal{}\,g more protein and
+\DeltaFibreMeal{}\,g more fibre. It provides \DeltaZincMeal{}\,mg less zinc, \DeltaBtwelveMeal{}\,\textmu g less
+vitamin~B\textsubscript{12} and \DeltaIronMeal{}\,mg less iron. For a student who ate beef on campus
+\FreqMeals{} times a week, that means \FreqZincWomen\% less zinc and \FreqBtwelve\% less B\textsubscript{12} relative
+to the reference intakes for women. These deficits are worth monitoring in groups whose iron and
+zinc intakes are already marginal\cite{ndns2020}. Averaged over Imperial's \CampusPeople{} students and
+staff, the zinc deficit is only \PopAvgZinc{}\,mg a day.
+
+%=================================================================== discussion
+\section{Implications}
+
+Our results separate two claims that are often merged. The first is that replacing beef with
+other foods cuts emissions, and this is robust. The cut is 72--93\% per portion when nutrition is
+matched, and it holds whichever basket is chosen and whether UK or global footprints are used. A
+city the size of London would avoid emissions equivalent to roughly a tenth of its territorial
+inventory, and even more under short-horizon metrics. The second claim is that a single institution
+achieves that cut by removing beef from its menus. This is much weaker. Market leakage, off-campus
+purchases and the emissions of substitute food cut the net saving to about half of the beef's
+footprint in the long run and about a sixth in the first year. A campus can report a large reduction in its procurement inventory while
+the effect on the atmosphere is smaller and, without a market response, could even be positive.
+This is the consequential-LCA point that a purchaser's inventory does not show the marginal effect
+of its decisions\cite{ekvall2004,budolfson2019}.
+
+Three practical conclusions follow for Imperial and similar institutions. First, nutrition: removing
+beef should come with appealing zinc- and B\textsubscript{12}-rich alternatives. Mycoprotein, pulses with
+vitamin~C, fish, eggs, dairy and fortified foods all qualify, and the mycoprotein and venison dishes
+Imperial already serves are good choices on these measures. Clear guidance on vitamin~B\textsubscript{12}
+is needed for students who stop eating meat. Second, accounting: claims should report consequential
+estimates alongside procurement inventories, with the short-run pass-through made explicit. Third,
+evaluation: the policy's effects on diets, satisfaction and welfare can be measured with till data,
+repeated 24-hour recalls\cite{bradley2016}, biomarkers and discrete-choice experiments\cite{johnston2017}.
+Estimates should use designs that account for pre-existing trends\cite{callaway2021,abadie2010,hausman2018}
+(Supplementary Note~12). Detecting a change in zinc intake of 0.5\,mg a day needs about \PowerN{}
+participants per group, so studies must target frequent campus diners.
+
+Our analysis has limitations. Nutrient equivalence is assessed per portion against one reference
+cut (lean mince). Bioavailability uses food-level absorption factors rather than meal-level models,
+and complementary proteins in mixed baskets are not credited. Emission factors for alternatives are
+global means, and market elasticities come from US and UK studies of whole national markets. The
+welfare model assumes the logit structure, and the dish elasticity that drives it has not been
+measured on any UK campus. Each assumption is exposed in the open code and data, and the
+Supplementary Information traces every number from its source to the result.
+
+%===================================================================== methods
+\section{Methods}
+
+\subsection{Overview and reproducibility}
+The model is written in Python (NumPy, SciPy, pandas). All inputs are in plain-text files in the
+repository's \texttt{data/} folder, each annotated with its source. One script reruns every
+calculation, writes all figures and tables, and generates the numbers quoted in this paper as LaTeX
+macros, so the text cannot drift from the code. Supplementary Information Notes~1--13 give every
+equation, parameter and intermediate result. Uncertainty is propagated by Monte Carlo simulation
+(\NMC{} draws for London, \NCampus{} for the campus); we report medians with 90\% intervals.
+
+\subsection{Food composition and bioavailability}
+Nutrient contents per 100\,g as eaten were taken from USDA FoodData Central SR Legacy\cite{usdafdc}
+for 16 foods (FDC identifiers in Supplementary Table~3), from manufacturer labels and analyses for
+mycoprotein\cite{finnigan2019,mayerlabba2022} and plant-based mince, and from UK labels for fortified
+cereal and soya drink. The reference is 90\%-lean beef mince, pan-browned. Protein is weighted by
+truncated DIAAS from pig and rat assays\cite{fao2013protein,bailey2020,mathai2017,han2020,nosworthy2017,rutherfurd2015,reynaud2021}.
+Iron is split into haem and non-haem pools absorbed at 25\% and 10\%\cite{efsa2015iron,hurrell2010}. Zinc
+absorption is 35\% from animal foods, 25\% from moderate-phytate foods and 18\% from pulses, seeds and
+whole grains\cite{fao2004vitmin,izincg2004,efsa2014zinc}. Vitamin~B\textsubscript{12} absorption is 60\% from meat,
+42\% from fish, 65\% from dairy, 9\% from eggs and 50\% from fortificants\cite{watanabe2007}. Ranges
+for all factors are tested in sensitivity analyses. UK reference nutrient intakes follow COMA\cite{dh1991}.
+
+\subsection{Single-food equivalents and diet optimisation}
+For food $i$ and nutrient $k$, the mass matching 100\,g of beef is $100\,b_k/a_{ik}$, where $b_k$ is beef's
+content and $a_{ik}$ the food's. Baskets are found by linear programming (HiGHS via SciPy). The
+programme minimises emissions subject to: supply of each key nutrient at least equal to beef's; energy
+between 0.85 and \LpEnergyMaxRatio{} times beef's; saturated fat no higher than beef's; sodium no more than
+\LpSodiumAllow{}\,mg above beef's; and portion caps. Each nutrient constraint has a penalised slack
+variable, so unavoidable shortfalls are reported rather than making the problem infeasible. Scenarios
+restrict the allowed food groups. ``Equivalent'' scenarios also require at least 60\% (dairy/egg-led:
+50\%) of quality-adjusted protein to come from the named group and allow B\textsubscript{12} and zinc tablets.
+A minimum-energy variant gives the least energy at which each scenario can match beef. Sensitivity
+analyses cover bioavailability (plant-favourable and plant-unfavourable extremes), no bioavailability
+adjustment, a strict $\pm$15\% energy band, and matching all ten nutrients (Extended Data Fig.~\ref{fig:basketsens}).
+
+\subsection{Emission factors}
+For alternative foods we use Poore and Nemecek's global mean emissions per kg of retail product as
+central values and their 5th, 50th and 95th percentiles to fit log-normal distributions\cite{poore2018}.
+For foods they do not cover we use verified product footprints: mycoprotein\cite{quorn2024} and
+plant-based mince\cite{heller2018,gfi2021}. Cooking yields come from USDA and Bognár tables\cite{showell2012,bognar2002},
+and a household waste fraction of \WastePct\% applies to all foods\cite{defra2010waste}. For beef we combine
+six supply segments: UK suckler, UK dairy-origin, Ireland, other Europe, Oceania and South America
+(Supplementary Table~8). Their shares come from Defra supply statistics and import data\cite{defra2025auk}.
+Farm-gate footprints per kg of carcass come from Defra/CIEL, PRISM (Agrecalc) and FAO GLEAM data\cite{ciel2020,prism2024,gerber2013}.
+These are converted to retail weight with a yield of \RetailYield{} and a post-farm-gate adder of
+\PostFarm{}\,kg \COtwoe{} per kg. In the consequential variant, dairy-origin beef carries only the rearing
+and finishing share of its footprint (avoidable fraction 0.7), because the cow's emissions are
+reallocated to milk rather than avoided\cite{ekvall2004}.
+
+\subsection{Scaling, metrics and Monte Carlo}
+Per-capita beef supply (\CweKg{}\,kg carcass weight a year; production plus imports minus exports divided
+by population\cite{defra2025auk,ons2025pop}) is converted to retail purchases and cooked intake as above.
+Annual emission changes are $10\,B_{\mathrm{eaten}}\mathrm{GHG}_b - B_{\mathrm{retail}}\mathrm{EF}_{\mathrm{beef}}$
+per person and are scaled by London's and the UK's populations. They are compared with LEGGI 2023
+(territorial)\cite{leggi2025}, London's consumption-based footprint for 2022\cite{gla2024cbe} and UK national
+totals\cite{desnz2026ghg}. Metric conversions use each footprint's gas composition and the GWP vintage
+in which it was reported, converted to AR6 values\cite{forster2021ar6}. Warming-equivalent emissions use
+GWP* with the coefficients of Smith et al.\cite{smith2021gwpstar}. The Monte Carlo samples consumption,
+yields, waste, segment footprints, segment shares (Dirichlet), avoidable fractions and every
+alternative-food footprint jointly. One-at-a-time sensitivities are shown in Extended Data Fig.~\ref{fig:tornado}.
+
+\subsection{Market model}
+The campus shock is propagated through an equilibrium displacement model of nine UK food markets
+(beef, lamb, pork, poultry, fish, eggs, dairy, plant protein and venison)\cite{alston1995science,wohlgenant1993}.
+Each market has constant-elasticity supply and demand with own- and cross-price elasticities. A
+demand shift $\Delta D$ at constant prices changes prices by $(\mathrm{diag}(\eta)-\mathcal{E})^{-1}\Delta D/Q$
+and production by $Q\eta\,\mathrm{d}\ln P$ (Supplementary Note~9). Demand elasticities come from UK
+estimates and meta-analyses\cite{tiffin2011,andreyeva2010,gallet2010}, including UK cross-price
+elasticities among meats\cite{tiffin2011}. Short-run (1-year) and long-run (10-year) supply elasticities
+come from US estimates\cite{usda2015cool,suh2017}, moderated for an integrated European market, and are
+sampled from triangular distributions (Supplementary Table~11). The shock is built from Imperial's
+beef purchases (\CampusBeefT{}\,t a year, freedom-of-information data\cite{imperialfoi}), the share of
+forgone beef meals going to each alternative dish type or off campus (Dirichlet-distributed;
+Supplementary Table~15), and dish recipes. Beef uses the consequential emission factor
+(\CampusEfConseq{}\,kg \COtwoe{} per kg).
+
+\subsection{Welfare and nutrient intake of diners}
+Diners choose dishes in a nested logit with beef and other meat dishes in one nest (dissimilarity
+$\lambda$). With prices fixed, the compensating variation per meal occasion is
+$\ln\!\left(1-P_M+P_M(1-P_B/P_M)^{\lambda}\right)/\alpha$\cite{small1981,train2009}. The marginal utility of
+money $\alpha$ is calibrated so that the beef dish's own-price elasticity equals $\varepsilon_B$. The loss per
+forgone beef meal is capped at the cost of buying beef off campus. Losses are compared with the
+avoided emissions valued at DESNZ carbon values (£\CarbonValueLow--\CarbonValueHigh{} per tonne, central
+£\CarbonValue{}; 2022 prices)\cite{desnz2023carbon}. Nutrient changes per forgone beef meal use the same
+dish recipes and composition data.
+
+\subsection{Use of AI tools}
+The analysis code, data assembly and manuscript drafting were carried out with the assistance of
+an AI system (Claude, Anthropic). Every numerical input is traceable to the sources cited in the
+data files, and the author is responsible for the content.
+
+%================================================================ end matter
+\section{Data availability}
+All input data, with sources, and all generated results are in the accompanying repository
+(\texttt{data/}, \texttt{results/}). The FOI purchase records are published by Imperial College London\cite{imperialfoi}.
+
+\section{Code availability}
+The code that reproduces every figure, table and number is in the repository (\texttt{src/beefwhatif},
+\texttt{scripts/run\_all.py}) under the MIT licence.
+
+\section{Competing interests}
+The author declares no competing interests.
+
+\bibliographystyle{naturemag}
+\bibliography{references}
+
+%============================================================== extended data
+\clearpage
+\setcounter{figure}{0}
+\setcounter{table}{0}
+\captionsetup[figure]{name=Extended Data Fig.}
+\captionsetup[table]{name=Extended Data Table}
+\section{Extended Data}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{../figures/ed1_emission_factors.pdf}
+\caption{\textbf{Emission factors.} kg \COtwoe{} per kg of each food as purchased: median and
+5th--95th percentile range used in the Monte Carlo, with Poore and Nemecek's global means. Red
+dots: retail emission factors of the six UK beef supply segments; their consumption-weighted mean
+is \EfBeefUkAttr{}\,kg \COtwoe{} per kg.}
+\label{fig:ef}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\linewidth]{../figures/ed2_tornado.pdf}
+\caption{\textbf{Sensitivity of London's emissions change.} Each input is moved to its low and
+high bound with all others at central values (poultry/pork-led basket, UK supply mix). Beef
+consumption per person dominates. Its low bound reproduces survey-based intakes.}
+\label{fig:tornado}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\linewidth]{../figures/ed3_basket_sensitivity.pdf}
+\caption{\textbf{Robustness of the optimised baskets.} \textbf{a}, Emissions and \textbf{b}, mass of
+each scenario's basket under alternative bioavailability assumptions, a strict isocaloric
+constraint and matching all ten nutrients. Hollow markers: a shortfall remains.}
+\label{fig:basketsens}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.62\linewidth]{../figures/ed4_campus_grid.pdf}
+\caption{\textbf{Campus net change, beef pass-through and off-campus purchasing.} Net annual change
+for Imperial as the share of forgone beef meals bought as beef off campus varies, for
+pass-through values from 0 to 1. The sign depends on pass-through alone: the ban reduces emissions
+only if pass-through exceeds the ratio of replacement-food to beef emissions (about \CampusPhiStar{}).}
+\label{fig:campusgrid}
+\end{figure}
+
+\begin{table}[H]
+\centering\small
+\caption{\textbf{Decomposition of the campus emissions change (t \COtwoe{} yr$^{-1}$).} Monte Carlo
+median and 90\% interval.}
+\input{generated/tab_campus.tex}
+\end{table}
+
+\begin{table}[H]
+\centering\small
+\caption{\textbf{Welfare and monetised climate effects for Imperial diners.}}
+\input{generated/tab_welfare.tex}
+\end{table}
+
+\end{document}

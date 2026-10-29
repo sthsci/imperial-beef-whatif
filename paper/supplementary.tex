@@ -1,0 +1,477 @@
+\documentclass[10pt]{article}
+\input{preamble}
+\input{generated/numbers}
+\captionsetup[figure]{name=Supplementary Fig.}
+\captionsetup[table]{name=Supplementary Table}
+\renewcommand{\thetable}{\arabic{table}}
+\renewcommand{\thefigure}{\arabic{figure}}
+\renewcommand{\theequation}{S\arabic{equation}}
+\setcounter{tocdepth}{1}
+
+\begin{document}
+
+\begin{center}
+{\sffamily\bfseries\Large Supplementary Information\par}
+\vspace{4pt}
+{\sffamily\large \PaperTitle\par}
+\vspace{6pt}
+{\sffamily \PaperAuthor\par}
+\end{center}
+
+\noindent This document gives every calculation behind the main paper, step by
+step and with the numbers used. All numbers are produced by the code in the
+repository (\texttt{scripts/run\_all.py}) and inserted into this document
+automatically, so the text, tables and figures cannot drift apart. Central
+values are reported first, followed by Monte Carlo medians and 90\% intervals
+(5th--95th percentiles) where relevant. Units: kg \COtwoe{} uses
+100-year global warming potentials (GWP\textsubscript{100}) unless stated; ``g as
+eaten'' means cooked weight for meat, fish and pulses.
+
+{\small\tableofcontents}
+
+%======================================================================
+\section{Supplementary Note 1. Imperial College London's beef policy and purchase data}
+\label{si:imperial}
+
+\paragraph{Policy timeline.} Imperial's Sustainable Food and Drink Policy
+(announced 7 December 2022) committed in-house catering to cut beef by 30\% a
+year and to remove it by 2025--26\cite{imperial2022policy}. The College's
+own analysis attributed 40\% of catering \COtwoe{} to fresh meat, which was only
+8\% of purchases, and 38\% of meat \COtwoe{} to beef\cite{imperial2024beef}.
+Taste Imperial removed beef from all of its menus in October
+2024\cite{imperial2024beef}. Wild venison was introduced in some dishes, and the
+standard meat portion was cut from 120\,g to 100\,g\cite{imperial2026progress}.
+The 2026--31 policy binds only in-house kitchens, outlets and events. Outsourced
+outlets are encouraged to stop selling beef by 2031\cite{imperial2025policy}.
+Imperial College Union's 568 bar stopped serving beef in March 2026\cite{felix2026five}.
+
+\paragraph{Purchase data.} We parsed the line-item food purchase records
+released under the Freedom of Information Act (requests IMPFOI-24-576 and
+IMPFOI-25-493)\cite{imperialfoi} with \texttt{scripts/foi\_meat\_purchases.py}.
+Pack weights were read from free text and multiplied by order quantities.
+Lines without a parseable weight were excluded, so the totals are lower bounds.
+Supplementary Table~\ref{tab:foi} and Supplementary Fig.~\ref{fig:foi} show the
+results.
+
+\begin{table}[H]
+\centering\small
+\caption{\textbf{Taste Imperial meat purchases (kg product weight per academic year).}
+2021/22 is a partial year. Beef was removed in October 2024 (academic year
+2024/25). ``Unparsed'' is the number of meat purchase lines without a readable pack
+weight. The final columns give the purchases' emissions at this study's central
+emission factors (Supplementary Note 5).}
+\label{tab:foi}
+\input{generated/tab_foi.tex}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.62\linewidth]{../figures/si_foi_purchases.pdf}
+\caption{\textbf{Meat purchases by Taste Imperial before and after beef removal.}
+Lines show kg of product per academic year, from FOI line-item data. Chicken
+values are lower bounds. The vertical line marks the removal of beef in
+October 2024.}
+\label{fig:foi}
+\end{figure}
+
+\paragraph{What the purchase data can and cannot show.} \FoiNarrative{}
+Chicken purchases were already rising by roughly 12\,t a year before beef was
+removed, so a simple before--after comparison would attribute an existing trend
+to the policy. Supplementary Note~12 sets out designs that handle this.
+
+%======================================================================
+\section{Supplementary Note 2. Food composition and bioavailability}
+\label{si:composition}
+
+Nutrient contents $a_{ik}$ of food $i$ and nutrient $k$ are per 100\,g as eaten
+(Supplementary Table~\ref{tab:foods}). Beef, the reference food, is lean beef mince
+(about 10\% fat), cooked. Four nutrients are adjusted for bioavailability:
+\begin{align}
+\text{protein}^{q}_{i} &= \text{protein}_i \times \min(\text{DIAAS}_i,\,1), \label{eq:prot}\\
+\text{Fe}^{abs}_{i} &= \text{Fe}_i \left[h_i\, a_{\mathrm{haem}} + (1-h_i)\, a_{\mathrm{non\text{-}haem}}\right], \label{eq:fe}\\
+\text{Zn}^{abs}_{i} &= \text{Zn}_i\, a_{\mathrm{Zn}}(c_i), \qquad
+\text{B}_{12}{}^{abs}_{i} = \text{B}_{12,i}\, a_{\mathrm{B12}}(c_i), \label{eq:zn}
+\end{align}
+where DIAAS is the digestible indispensable amino acid score\cite{fao2013protein},
+$h_i$ the haem fraction of iron, and $a(\cdot)$ the fractional absorption for the
+food class $c_i$ (Supplementary Table~\ref{tab:bio}). Truncating DIAAS at 1 counts
+only protein that is not limited by its first-limiting indispensable amino acid,
+the standard convention for single foods. It ignores complementation between
+foods in a mixed basket, so it is conservative for plant baskets.
+
+\begin{table}[H]
+\centering\small
+\caption{\textbf{Bioavailability parameters.} Central values with the range
+used in sensitivity analyses.}
+\label{tab:bio}
+\input{generated/tab_bio.tex}
+\end{table}
+
+\paragraph{Worked example: 100\,g of cooked beef.}
+\input{generated/worked_beef_bio.tex}
+
+\begin{table}[p]
+\centering\scriptsize
+\caption{\textbf{Composition of the reference beef and of the alternative foods, per 100\,g as eaten (one tablet for supplements).}
+Sources are given in the last column. ``Diet'' is the food group used to define scenarios.}
+\label{tab:foods}
+\resizebox{\linewidth}{!}{\input{generated/tab_foods.tex}}
+\end{table}
+
+%======================================================================
+\section{Supplementary Note 3. Single-food equivalents}
+\label{si:equivalents}
+
+The mass of food $i$ that supplies as much of nutrient $k$ as 100\,g of beef is
+\begin{equation}
+g_{ik} = 100\,\mathrm{g}\times \frac{b_k}{a_{ik}}, \qquad b_k = a_{\mathrm{beef},k},
+\end{equation}
+and the mass that matches \emph{every} target nutrient is $g_i = \max_k g_{ik}$.
+The nutrient that attains the maximum is the binding nutrient.
+Supplementary Table~\ref{tab:equiv} lists $g_{ik}$ for all foods. ``never'' marks a food that
+contains none of the nutrient.
+
+\paragraph{Worked example.}
+\input{generated/worked_equivalents.tex}
+
+\begin{table}[p]
+\centering\scriptsize
+\caption{\textbf{Grams of each food (as eaten) that supply the nutrient content of 100\,g cooked beef.}
+Protein, iron, zinc and vitamin B\textsubscript{12} are bioavailability-adjusted.
+The last two columns give the amount needed to match all ten nutrients and the
+binding nutrient. Values above 2,000\,g are shown as ``>2k''.}
+\label{tab:equiv}
+\resizebox{\linewidth}{!}{\input{generated/tab_equivalents.tex}}
+\end{table}
+
+%======================================================================
+\section{Supplementary Note 4. Nutrient-matching linear programmes}
+\label{si:lp}
+
+For a set $A$ of allowed foods, the basket $x_i\ge 0$ (units of 100\,g as eaten, or
+tablets) that replaces 100\,g of beef solves
+\begin{align}
+\min_{x,\,s}\;& \sum_{i\in A} c_i x_i + M\sum_{k} s_k \\
+\text{s.t.}\;& \sum_{i\in A} \frac{a_{ik}}{b_k}\,x_i + s_k \ge 1 \quad \forall k \in K, \qquad 0\le s_k\le 1,\\
+& (1-\delta_{\mathrm{lo}})\,E_{\mathrm{beef}} \le \sum_i e_i x_i \le (1+\delta_{\mathrm{hi}})\,E_{\mathrm{beef}},\\
+& \sum_i \mathrm{SFA}_i\, x_i \le \rho\,\mathrm{SFA}_{\mathrm{beef}}, \qquad
+\sum_i \mathrm{Na}_i\, x_i \le \mathrm{Na}_{\mathrm{beef}} + \Delta_{\mathrm{Na}},\\
+& 0 \le x_i \le \bar{x}_i ,
+\end{align}
+where $K$ is the set of ten target nutrients (bioavailability-adjusted protein,
+iron, zinc and vitamin B\textsubscript{12}, plus niacin, vitamin B\textsubscript{6},
+riboflavin, selenium, phosphorus and potassium), $c_i$ the emissions per unit
+(minimum-GHG objective) or the mass per unit (minimum-mass objective), $e_i$
+energy, and $\bar{x}_i$ a portion cap. Settings: energy band
+$\delta_{\mathrm{lo}}=\LpEnergyTolLow$, $\delta_{\mathrm{hi}}=\LpEnergyTolHigh$
+(relaxed to $\LpEnergyTolRelaxed$ in sensitivity analysis); saturated fat ratio
+$\rho=\LpSatfatMaxRatio$; extra sodium allowance $\Delta_{\mathrm{Na}}=\LpSodiumAllow$\,mg;
+portion caps in Supplementary Table~\ref{tab:foods}. The shortfall slacks $s_k$ carry a penalty
+$M=100$\,kg \COtwoe{} per unit of fractional shortfall. Any basket's emissions are
+below 1\,kg \COtwoe{}, so the slacks are used only when no feasible basket
+exists, and they then report the unavoidable shortfall. The programmes are
+solved with HiGHS through \texttt{scipy.optimize.linprog}.
+
+Scenarios restrict $A$ by food group: omnivore without ruminant meat
+(poultry, pork, fish, eggs, dairy, plants, fortified foods); poultry and pork only;
+pescatarian; vegetarian; vegan with fortified foods; vegan with fortified foods
+and supplements; and vegan from whole foods only. Supplementary Table~\ref{tab:baskets}
+gives the solutions and Supplementary Table~\ref{tab:basketsens} the sensitivity analyses.
+
+\begin{table}[p]
+\centering\scriptsize
+\caption{\textbf{Optimised baskets replacing 100\,g of cooked beef.} Composition in g as
+eaten (supplements in tablets), emissions with central emission factors, and
+the supply of each target nutrient relative to beef (1.00 = equal).}
+\label{tab:baskets}
+\resizebox{\linewidth}{!}{\input{generated/tab_baskets_full.tex}}
+\end{table}
+
+\begin{table}[H]
+\centering\small
+\caption{\textbf{Sensitivity of basket emissions (kg \COtwoe{} per 100\,g beef replaced) and mass (g) to bioavailability and energy assumptions.}
+Infeasible baskets (shortfall in at least one nutrient) are marked with~$^\dagger$.}
+\label{tab:basketsens}
+\resizebox{\linewidth}{!}{\input{generated/tab_basket_sensitivity.tex}}
+\end{table}
+
+%======================================================================
+\section{Supplementary Note 5. Emission factors and the UK beef supply mix}
+\label{si:ef}
+
+\paragraph{Alternative foods.} Emission factors (EFs) are kg \COtwoe{} per kg as
+purchased, cradle to retail (Supplementary Table~\ref{tab:efs}). The central values are UK- or
+Europe-relevant where available, with Poore \& Nemecek's global means\cite{poore2018}
+as a comparison. Emissions per LP unit as eaten are
+\begin{equation}
+\mathrm{GHG}_i = \frac{m_i}{y_i\,(1-w)}\;\mathrm{EF}_i,
+\end{equation}
+with unit mass $m_i=0.1$\,kg, cooking yield $y_i$ (kg as eaten per kg purchased),
+and household waste fraction $w=\WasteFrac$ applied equally to all foods.
+
+\begin{table}[p]
+\centering\scriptsize
+\caption{\textbf{Emission factors (kg \COtwoe{} per kg as purchased).} Central value, 90\% interval used
+in Monte Carlo sampling (log-normal), Poore \& Nemecek global mean, cooking yield and greenhouse-gas
+composition used for metric conversions.}
+\label{tab:efs}
+\resizebox{\linewidth}{!}{\input{generated/tab_efs.tex}}
+\end{table}
+
+\paragraph{Beef consumed in the UK.} The EF of beef is built from the origin
+and production-system mix of UK beef consumption (Supplementary Table~\ref{tab:beefmix}).
+Farm-gate footprints per kg carcass weight equivalent (cwe) are converted to
+retail boneless meat and given a post-farm-gate adder:
+\begin{equation}
+\mathrm{EF}^{\mathrm{retail}}_{j} = \frac{\mathrm{EF}^{\mathrm{farm}}_{j}}{r} + p,
+\qquad \mathrm{EF}_{\mathrm{beef}} = \sum_j s_j\,\mathrm{EF}^{\mathrm{retail}}_j,
+\end{equation}
+where $r=\RetailYield$ is the carcass-to-retail yield, $p=\PostFarm$\,kg \COtwoe{}\,kg$^{-1}$
+the post-farm-gate emissions, and $s_j$ the market share of segment $j$. The
+\emph{consequential} variant multiplies each farm-gate EF by an avoidable
+fraction $f_j$. Beef from the dairy herd is a co-product of milk. If its beef is
+no longer demanded, the cow's emissions are reallocated to milk rather than
+avoided, so only the calf-rearing and finishing emissions disappear.
+
+\begin{table}[H]
+\centering\small
+\caption{\textbf{UK beef supply mix.} Shares of consumption, farm-gate footprints and the resulting retail EFs.}
+\label{tab:beefmix}
+\resizebox{\linewidth}{!}{\input{generated/tab_beef_supply.tex}}
+\end{table}
+
+\paragraph{Worked calculation.}
+\input{generated/worked_beef_ef.tex}
+
+%======================================================================
+\section{Supplementary Note 6. From one portion to London and the UK}
+\label{si:scaling}
+
+Per-capita beef flows follow the supply chain from the national supply balance:
+\begin{align}
+B_{\mathrm{retail}} &= B_{\mathrm{cwe}}\, r, \qquad
+B_{\mathrm{eaten}} = B_{\mathrm{retail}}\,(1-w)\, y_{\mathrm{beef}},
+\end{align}
+where $B_{\mathrm{cwe}}$ is beef consumption in carcass-weight equivalent per person per year,
+$r$ the retail yield, $w$ household waste and $y_{\mathrm{beef}}$ the cooking yield.
+The annual change in emissions per person when beef is replaced by basket $b$ is
+\begin{equation}
+\Delta e = \underbrace{10\,B_{\mathrm{eaten}}\;\mathrm{GHG}_b}_{\text{replacement}}
+- \underbrace{B_{\mathrm{retail}}\;\mathrm{EF}_{\mathrm{beef}}}_{\text{beef}},
+\end{equation}
+with $\mathrm{GHG}_b$ in kg \COtwoe{} per 100\,g of beef replaced (hence the factor 10
+per kg). London and UK totals multiply by population.
+
+\paragraph{Worked calculation (central values, omnivore basket).}
+\input{generated/worked_scaling.tex}
+
+\begin{table}[H]
+\centering\small
+\caption{\textbf{Annual emissions change from replacing all beef eaten by Londoners with nutritionally equivalent baskets.}
+Central values. Percentages are relative to London's territorial emissions
+(LEGGI 2023) and to London's consumption-based emissions.}
+\label{tab:scaling}
+\resizebox{\linewidth}{!}{\input{generated/tab_scaling.tex}}
+\end{table}
+
+%======================================================================
+\section{Supplementary Note 7. Monte Carlo uncertainty and sensitivity}
+\label{si:mc}
+
+We drew \NMC{} joint samples of all uncertain inputs: per-capita
+consumption, yields, waste, segment-level beef EFs, segment shares
+(Dirichlet), avoidable fractions, post-farm emissions, and the EF of every
+replacement food (log-normal, independent). Basket compositions are held at
+their central LP solutions. Supplementary Table~\ref{tab:mc} summarises the
+distributions, and Extended Data Fig.~2 of the main paper shows one-at-a-time
+sensitivities.
+
+\begin{table}[H]
+\centering\small
+\caption{\textbf{Monte Carlo results for London (Mt \COtwoe{} yr$^{-1}$).} Median and 90\% interval.}
+\label{tab:mc}
+\input{generated/tab_mc.tex}
+\end{table}
+
+%======================================================================
+\section{Supplementary Note 8. Emission metrics: GWP\textsubscript{100}, GWP\textsubscript{20} and GWP*}
+\label{si:metrics}
+
+Emission factors are reported in different GWP\textsubscript{100} vintages. Poore \& Nemecek
+used AR5 values with climate--carbon feedbacks (\CHfour{} 34, \NtwoO{} 298). We
+convert each EF to a target metric with its gas composition
+($f_{\mathrm{CO_2}}, f_{\mathrm{CH_4}}, f_{\mathrm{N_2O}}$, shares of the source-metric total):
+\begin{equation}
+\mathrm{EF}^{\mathrm{target}} = \mathrm{EF}\left[f_{\mathrm{CO_2}} +
+f_{\mathrm{CH_4}}\frac{\mathrm{GWP}^{\mathrm{target}}_{\mathrm{CH_4}}}{\mathrm{GWP}^{\mathrm{source}}_{\mathrm{CH_4}}} +
+f_{\mathrm{N_2O}}\frac{\mathrm{GWP}^{\mathrm{target}}_{\mathrm{N_2O}}}{\mathrm{GWP}^{\mathrm{source}}_{\mathrm{N_2O}}}\right],
+\end{equation}
+using AR6 values for non-fossil \CHfour{} (GWP\textsubscript{100} 27.0, GWP\textsubscript{20} 79.7) and \NtwoO{}
+(273)\cite{forster2021ar6}.
+
+\paragraph{GWP*.} Methane is short-lived, so a sustained change in its emission
+\emph{rate} has a different effect on warming from a pulse of \COtwo{}. The
+warming-equivalent emissions of methane are\cite{smith2021gwpstar,cain2019gwpstar}
+\begin{equation}
+E^{*}_{t} = \mathrm{GWP}_{100}\left(4.53\,E_t - 4.25\,E_{t-20}\right).
+\end{equation}
+If a constant methane source $E_0$ stops at $t=0$, the change relative to it
+continuing is $-4.53\,\mathrm{GWP}_{100}E_0$ a year for 20 years and
+$-0.28\,\mathrm{GWP}_{100}E_0$ a year thereafter. Cumulatively this is about 4.5
+times the GWP\textsubscript{100} accounting over the first 20 years, falling to about 1.1 times
+after 100 years. Long-lived gases (\COtwo{}, \NtwoO{}) are counted at
+GWP\textsubscript{100}.
+
+\paragraph{Worked calculation (London, UK supply mix).}
+\input{generated/worked_gwp.tex}
+
+%======================================================================
+\section{Supplementary Note 9. Market response: equilibrium displacement model}
+\label{si:edm}
+
+\paragraph{Model.} Each food market $i$ has constant-elasticity supply
+$\mathrm{d}\ln Q^{s}_i = \eta_i\,\mathrm{d}\ln P_i$ and demand
+$\mathrm{d}\ln Q^{d}_i = \sum_j \varepsilon_{ij}\,\mathrm{d}\ln P_j + \Delta D_i/Q_i$,
+where $\Delta D_i$ is the exogenous shift in quantity demanded at unchanged
+prices (the campus shock) and $\varepsilon_{ij}$ are Marshallian own- and
+cross-price elasticities\cite{alston1995science,wohlgenant1993}. Market clearing gives
+\begin{equation}
+(\mathrm{diag}(\eta) - \mathcal{E})\,\mathrm{d}\ln P = \Delta D / Q, \qquad
+\Delta Q = Q \circ \eta \circ \mathrm{d}\ln P .
+\end{equation}
+For one market without cross effects the change in production is
+$\Delta Q = \phi\,\Delta D$ with pass-through
+\begin{equation}
+\phi = \frac{\eta}{\eta - \varepsilon}\quad(\varepsilon<0),
+\end{equation}
+and $1-\phi$ of the campus's forgone demand is consumed by other buyers
+because the price falls (market leakage). Perfectly elastic supply gives
+$\phi=1$; fixed supply gives $\phi=0$.
+
+\paragraph{Shock.} With $G$ kg of beef removed from campus menus, a share
+$s_{\mathrm{off}}$ of forgone beef meals bought as beef off campus, and
+replacement dishes purchased per forgone meal according to the destination
+shares in Supplementary Table~\ref{tab:dishes},
+\begin{equation}
+\Delta D_{\mathrm{beef}} = -(1-s_{\mathrm{off}})\,G, \qquad
+\Delta D_{i} = N_{\mathrm{beef}} \sum_{d} \pi_d\, q_{di}\quad(i\neq \mathrm{beef}),
+\end{equation}
+where $N_{\mathrm{beef}}=G/g_{\mathrm{meal}}$ is the number of beef meals, $\pi_d$
+the destination shares and $q_{di}$ the purchased kg of food $i$ in a dish of
+type $d$. The net emissions change is $\sum_i \Delta Q_i\,\mathrm{EF}_i$, which we decompose as
+\begin{equation}
+\Delta E = \underbrace{-G\,\mathrm{EF}_{\mathrm{b}}}_{\text{gross}}
++ \underbrace{\textstyle\sum_{i\ne b}\Delta D_i \mathrm{EF}_i}_{\text{replacement food}}
++ \underbrace{s_{\mathrm{off}}G\,\mathrm{EF}_{\mathrm{b}}}_{\text{off campus}}
++ \underbrace{(\Delta Q_{\mathrm{b}}-\Delta D_{\mathrm{b}})\mathrm{EF}_{\mathrm{b}}}_{\text{market leakage}}
++ \underbrace{\textstyle\sum_{i\ne b}(\Delta Q_i-\Delta D_i)\mathrm{EF}_i}_{\text{replacement market adj.}} .
+\end{equation}
+
+\begin{table}[H]
+\centering\small
+\caption{\textbf{Market parameters.} Baseline UK consumption, supply elasticities
+(short and long run) and own-price demand elasticities. Triangular distributions
+on the stated ranges.}
+\label{tab:markets}
+\resizebox{\linewidth}{!}{\input{generated/tab_markets.tex}}
+\end{table}
+
+\begin{table}[H]
+\centering\small
+\caption{\textbf{Cross-price demand elasticities} $\varepsilon_{ij}$ (row: quantity; column: price).}
+\label{tab:cross}
+\input{generated/tab_cross.tex}
+\end{table}
+
+\paragraph{Worked calculation (central values).}
+\input{generated/worked_edm.tex}
+
+\begin{table}[H]
+\centering\small
+\caption{\textbf{Campus beef removal: decomposition of the annual emissions change (t \COtwoe{} yr$^{-1}$).}
+Monte Carlo median and 90\% interval (\NCampus{} draws).}
+\label{tab:campus}
+\input{generated/tab_campus.tex}
+\end{table}
+
+%======================================================================
+\section{Supplementary Note 10. Welfare of diners}
+\label{si:welfare}
+
+\paragraph{Model.} A diner choosing a dish on a meal occasion has utility
+$U_j = V_j - \alpha p_j + \epsilon_j$ with generalised-extreme-value errors that
+form a ``meat'' nest (beef and other meat dishes) with dissimilarity parameter
+$\lambda\in(0,1]$ and other dishes as their own nests. The expected maximum utility is
+the log-sum, so removing the beef alternative(s) with prices held fixed gives
+the compensating variation per meal occasion\cite{small1981,train2009}
+\begin{equation}
+\mathrm{CV} = \frac{1}{\alpha}\ln\!\Big(1 - P_M + P_M\big(1 - P_{B\mid M}\big)^{\lambda}\Big),
+\end{equation}
+where $P_M$ is the meat-nest share and $P_{B\mid M}=P_B/P_M$ the beef share within
+the nest. For $\lambda=1$ this reduces to the multinomial-logit result
+$\mathrm{CV}=\ln(1-P_B)/\alpha$. As $\lambda\to 0$, other meat is a perfect
+substitute and $\mathrm{CV}\to 0$. The loss per forgone beef meal is $-\mathrm{CV}/P_B$.
+
+\paragraph{Calibration.} The marginal utility of money $\alpha$ comes from an
+assumed own-price elasticity of a beef dish,
+\begin{equation}
+\varepsilon_B = -\alpha\,p_B\left[\frac{1}{\lambda} - \Big(\frac{1}{\lambda}-1\Big)P_{B\mid M} - P_B\right].
+\end{equation}
+A diner can always walk off campus and buy a beef meal, so the loss per forgone
+beef meal cannot exceed the cost of that outside option (time plus any price
+premium). We report the logit estimate and the estimate capped at this cost.
+
+\paragraph{Worked calculation (central values).}
+\input{generated/worked_welfare.tex}
+
+\begin{table}[H]
+\centering\small
+\caption{\textbf{Welfare and monetised climate effects of campus beef removal (Monte Carlo).}}
+\label{tab:welfare}
+\input{generated/tab_welfare.tex}
+\end{table}
+
+%======================================================================
+\section{Supplementary Note 11. Nutrient intake of campus diners}
+\label{si:students}
+
+Supplementary Table~\ref{tab:dishes} defines the protein component of each dish
+type. Accompaniments (starch, vegetables) are assumed unchanged. Nutrients per
+dish are $\sum_i q_{di}\,y_i\,a_{ik}\times 10$ (kg purchased $\times$ cooking yield
+$\times$ nutrient per 100\,g). The expected change per forgone beef meal is
+$\sum_d \pi_d(n_d - n_{\mathrm{beef}})$, with off-campus non-beef meals taking the
+average on-campus alternative and off-campus beef meals unchanged.
+
+\begin{table}[H]
+\centering\small
+\caption{\textbf{Dish templates (kg purchased per serving) and destination shares $\pi_d$ of forgone beef meals.}}
+\label{tab:dishes}
+\input{generated/tab_dishes.tex}
+\end{table}
+
+\begin{table}[H]
+\centering\small
+\caption{\textbf{Nutrients per serving of each dish's protein component, and the change per forgone beef meal.}}
+\label{tab:dishnut}
+\resizebox{\linewidth}{!}{\input{generated/tab_dish_nutrients.tex}}
+\end{table}
+
+%======================================================================
+\section{Supplementary Note 12. Measuring what the policy did: an evaluation design}
+\label{si:evaluation}
+
+\input{generated/evaluation_design.tex}
+
+%======================================================================
+\section{Supplementary Note 13. Complete parameter list}
+\label{si:params}
+
+{\scriptsize
+\input{generated/tab_params.tex}
+}
+
+\FloatBarrier
+\bibliographystyle{naturemag}
+\bibliography{references}
+
+\end{document}

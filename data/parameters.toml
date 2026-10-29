@@ -1,0 +1,137 @@
+# Model parameters. Every uncertain scalar has a central `value`, optional
+# `low`/`high` bounds and a `dist` for Monte Carlo sampling (see
+# src/beefwhatif/params.py): fixed | uniform | tri (mode = value) |
+# lognormal (median = value, [low, high] = 90% interval).
+# `source` keys refer to entries in paper/references.bib.
+
+[meta]
+seed = 20261029
+n_mc = 20000
+n_campus = 4000
+base_year = 2024
+
+# ----------------------------------------------------------------- populations
+[population]
+london = { value = 9089736, unit = "persons", source = "ons2025pop", note = "ONS mid-2024 estimate, Greater London" }
+uk = { value = 69281437, unit = "persons", source = "ons2025pop", note = "ONS mid-2024 estimate, United Kingdom" }
+
+# ---------------------------------------------------------- London and UK GHG
+[london]
+leggi_total_mt = { value = 28.61, low = 27.9, high = 30.0, dist = "tri", unit = "MtCO2e/yr", source = "leggi2025", note = "LEGGI 2023 (interim, Dec 2025), territorial; 2021-2022 were 29.8-30.0" }
+consumption_based_mt = { value = 87.95, low = 80.7, high = 88.0, dist = "tri", unit = "MtCO2e/yr", source = "gla2024cbe", note = "London consumption-based emissions 2022 (University of Leeds for GLA); 80.7 in 2021" }
+consumption_food_mt = { value = 9.80, unit = "MtCO2e/yr", source = "gla2024cbe", note = "Food within London's consumption-based emissions, 2022" }
+
+[uk]
+territorial_mt = { value = 373.4, unit = "MtCO2e/yr", source = "desnz2026ghg", note = "UK territorial GHG emissions 2024 (final)" }
+consumption_mt = { value = 699.2, unit = "MtCO2e/yr", source = "defra2026footprint", note = "UK consumption footprint 2023" }
+agriculture_mt = { value = 46.52, unit = "MtCO2e/yr", source = "desnz2026ghg", note = "UK agriculture 2024" }
+beef_enteric_mt = { value = 11.33, unit = "MtCO2e/yr", source = "desnz2026ghg", note = "Enteric fermentation, beef cattle, 2024 (AR5)" }
+beef_manure_mt = { value = 2.68, unit = "MtCO2e/yr", source = "desnz2026ghg", note = "Manure management, beef cattle, 2024 (AR5)" }
+
+# ------------------------------------------------------------- beef consumption
+[consumption]
+beef_cwe_kg_per_cap = { value = 15.8, low = 11.2, high = 16.9, dist = "tri", unit = "kg cwe/person/yr", source = "defra2025auk", note = "UK supply 2024: (929 + 307 - 142) kt / 69.3 M. High: FAO food balance 16.85 (2023). Low: consistent with NDNS beef intake 13.3 g/day as eaten" }
+dairy_origin_share = { value = 0.50, low = 0.37, high = 0.55, dist = "tri", unit = "fraction", source = "ciel2020", note = "About half of UK beef comes from the dairy herd" }
+
+[conversion]
+beef_retail_yield = { value = 0.70, low = 0.62, high = 0.74, dist = "tri", unit = "kg retail / kg cwe", source = "poore2018", note = "Fat- and bone-free meat incl. edible offal = 72% of carcass (Poore & Nemecek Table S5); AAFC 0.73; closely trimmed boneless 0.62" }
+beef_cook_yield = { value = 0.69, low = 0.67, high = 0.73, dist = "tri", unit = "kg cooked / kg raw", source = "showell2012", note = "Beef mince <12% fat, crumbles, pan-fried 0.69 (0.67-0.70); broiled patty 0.73" }
+household_waste_frac = { value = 0.10, low = 0.06, high = 0.14, dist = "tri", unit = "fraction of purchases", source = "defra2010waste", note = "10% of red-meat purchases wasted (poultry 14%, cheese 13%, milk 8%); applied to all foods" }
+
+# ------------------------------------------------------------------ emissions
+[emissions]
+beef_post_farm_kg_per_kg = { value = 3.0, low = 2.0, high = 4.5, dist = "tri", unit = "kgCO2e/kg retail", source = "poore2018", note = "Processing, packaging, transport and retail; P&N beef-herd post-farm = 2.89" }
+pn_beef_herd = { value = 99.48, unit = "kgCO2e/kg retail", source = "poore2018", note = "Global mean, beef herd (AR5 with feedbacks); median 60.36; 5th-95th 37.6-269" }
+pn_beef_dairy = { value = 33.30, unit = "kgCO2e/kg retail", source = "poore2018", note = "Global mean, dairy herd; median 34.14" }
+pn_uk_beef_herd = { value = 48.4, unit = "kgCO2e/kg retail", source = "ciel2020", note = "Poore & Nemecek UK producers, to retail (quoted by CIEL)" }
+pn_uk_beef_dairy = { value = 25.9, unit = "kgCO2e/kg retail", source = "ciel2020", note = "Poore & Nemecek UK producers, to retail (quoted by CIEL)" }
+uk_beef_gwp_src = "AR5"
+diet_fp_t_per_cap = { value = 2.0, low = 1.1, high = 2.6, dist = "tri", unit = "tCO2e/person/yr", source = "scarborough2014", note = "Average UK diet (LCA-based); London input-output estimate is 1.1" }
+coc_beef_kg_per_kg_carcass = { value = 144, unit = "kgCO2e/kg carcass", source = "searchinger2018", note = "Carbon opportunity cost of land, beef (4% discount); production adds 44" }
+
+# --------------------------------------------------------------- bioavailability
+[bioavailability]
+haem_abs = { value = 0.25, low = 0.15, high = 0.35, unit = "fraction", source = "efsa2015iron", note = "Haem iron absorption ~25% (EFSA 2015; FAO/WHO 10-40%)" }
+nonhaem_abs = { value = 0.10, low = 0.05, high = 0.15, unit = "fraction", source = "hurrell2010", note = "Non-haem iron; whole mixed diets 14-18%, vegetarian 5-12%" }
+zinc_abs_animal = { value = 0.35, low = 0.30, high = 0.40, unit = "fraction", source = "fao2004vitmin", note = "Low-phytate diets: FAO/WHO 50/30/15% at phytate:zinc <5/5-15/>15; IZiNCG 26-34% mixed diets" }
+zinc_abs_mixed = { value = 0.25, low = 0.20, high = 0.30, unit = "fraction", source = "efsa2014zinc", note = "Moderate-phytate foods (tofu, fortified foods); mycoprotein ileal Zn absorption 24% (Edwards & Cummings 2010)" }
+zinc_abs_phytate = { value = 0.18, low = 0.12, high = 0.25, unit = "fraction", source = "izincg2004", note = "Unrefined cereal / legume diets: IZiNCG 18% (men), 25% (women)" }
+zinc_abs_supplement = { value = 0.40, low = 0.30, high = 0.50, unit = "fraction", source = "efsa2014zinc", note = "Zinc salts taken with a meal" }
+b12_abs_meat = { value = 0.60, low = 0.50, high = 0.70, unit = "fraction", source = "watanabe2007", note = "Mutton 56-89%, chicken 61-66%" }
+b12_abs_fish = { value = 0.42, low = 0.35, high = 0.50, unit = "fraction", source = "watanabe2007", note = "Trout 42%" }
+b12_abs_egg = { value = 0.09, low = 0.04, high = 0.20, unit = "fraction", source = "watanabe2007", note = "Egg B12 poorly absorbed (<9%)" }
+b12_abs_dairy = { value = 0.65, low = 0.50, high = 0.70, unit = "fraction", source = "watanabe2007", note = "Milk B12" }
+b12_abs_synthetic = { value = 0.50, low = 0.40, high = 0.60, unit = "fraction", source = "watanabe2007", note = "Cyanocobalamin in fortified foods/supplements at low doses" }
+b12_abs_none = { value = 0.0, unit = "fraction", source = "", note = "No B12" }
+
+# ------------------------------------------------------------ LP settings
+[lp]
+energy_tol_low = 0.15
+energy_tol_high = 1.00
+energy_tol_strict = 0.15
+energy_tol_relaxed = 2.00
+satfat_max_ratio = 1.0
+sodium_allow_mg = 150.0
+
+# -------------------------------------------------------------- Imperial
+[imperial]
+students = { value = 23920, unit = "headcount", source = "imperial2026stats", note = "31 Dec 2025" }
+staff_fte = { value = 8941, unit = "FTE", source = "imperial2026stats", note = "31 Dec 2025" }
+total_ghg_t = { value = 247453, unit = "tCO2e/yr", source = "imperial2025annual", note = "2024-25: scope 1 33,614; scope 2 12,056; scope 3 201,783" }
+scope12_t = { value = 45670, unit = "tCO2e/yr", source = "imperial2025annual", note = "2024-25 scope 1 + 2" }
+catering_ghg_t = { value = 2097, unit = "tCO2e/yr", source = "imperial2024sust", note = "2023-24 spend-based: food 729, beverages 38, catering equipment/services 1,330" }
+
+# ------------------------------------------------------- campus intervention
+[campus]
+beef_t_per_year = { value = 9.5, low = 8.0, high = 10.6, dist = "tri", unit = "t product/yr", source = "imperialfoi", note = "Taste Imperial beef purchases 2022/23 10.5 t, 2023/24 8.5 t (FOI)" }
+beef_kg_per_meal = { value = 0.12, low = 0.10, high = 0.14, dist = "tri", unit = "kg/meal", source = "imperial2026progress", note = "Standard meat portion before the 2024 cut to 100 g" }
+meals_per_year = { value = 1.0e6, low = 0.6e6, high = 1.6e6, dist = "tri", unit = "main meals/yr", source = "assumption", note = "Tens of thousands of customers a day across >30 outlets; main meals only" }
+frequent_beef_meals_per_week = { value = 2.0, unit = "meals/week", source = "assumption", note = "Illustrative frequent campus beef eater" }
+switch_concentration = { value = 25.0, unit = "Dirichlet concentration", source = "assumption", note = "Uncertainty around destination shares" }
+
+[campus.switch]  # where forgone beef meals go (normalised to sum to 1)
+other_meat = { value = 0.50, unit = "share", source = "imperialfoi;merk2024", note = "Chicken, pork and wild venison (FOI purchase trends)" }
+fish = { value = 0.06, unit = "share", source = "assumption", note = "" }
+vegetarian = { value = 0.20, unit = "share", source = "merk2024;garnett2019", note = "Vegetarian sales rose on no-beef days" }
+vegan = { value = 0.10, unit = "share", source = "assumption", note = "" }
+off_campus_beef = { value = 0.07, unit = "share", source = "russo2025;merk2024", note = "Buy beef elsewhere (behavioural leakage)" }
+off_campus_other = { value = 0.07, unit = "share", source = "russo2025", note = "Eat elsewhere, not beef" }
+
+# Protein component of each dish, kg as purchased per serving (other components unchanged).
+[dishes.beef]
+beef_mince = 0.12
+[dishes.other_meat]
+chicken_breast = 0.072
+pork_loin = 0.024
+venison = 0.024
+[dishes.fish]
+salmon = 0.12
+[dishes.vegetarian]
+cheddar = 0.035
+egg = 0.030
+chickpeas = 0.030
+mycoprotein = 0.040
+[dishes.vegan]
+kidney_beans = 0.030
+lentils = 0.020
+tofu = 0.060
+pea_mince = 0.030
+
+# ------------------------------------------------------------------ welfare
+[welfare]
+meat_nest_share = { value = 0.55, low = 0.45, high = 0.65, dist = "tri", unit = "share of meals", source = "pechey2022;garnett2019", note = "Meat dishes incl. beef; Oxford baseline 61%" }
+nest_lambda = { value = 0.6, low = 0.3, high = 1.0, dist = "tri", unit = "", source = "assumption", note = "Nested-logit dissimilarity of the meat nest" }
+dish_elasticity = { value = -1.5, low = -3.0, high = -0.8, dist = "tri", unit = "", source = "garnett2021;salvi2025", note = "Own-price elasticity of a beef dish" }
+meal_price_gbp = { value = 6.0, low = 4.5, high = 7.5, dist = "tri", unit = "GBP", source = "assumption", note = "Campus hot meal" }
+outside_option_cost_gbp = { value = 3.0, low = 1.5, high = 5.0, dist = "tri", unit = "GBP", source = "assumption", note = "Time and price premium of buying a beef meal off campus" }
+
+[carbon_value]
+desnz_central_gbp = { value = 277.2, low = 138.6, high = 415.8, dist = "tri", unit = "GBP(2022)/tCO2e", source = "desnz2023carbon", note = "2026 central, low and high series" }
+epa_scc_usd = { value = 215, unit = "USD(2020)/tCO2", source = "epa2023scghg", note = "2026, 2% discount rate" }
+
+# ------------------------------------------------------------ evaluation design
+[evaluation]
+zinc_sd_mg = { value = 3.5, unit = "mg/day", source = "ndns2020", note = "SD of usual zinc intake, young adults (approx.)" }
+detectable_zinc_mg = { value = 0.5, unit = "mg/day", source = "assumption", note = "Minimum detectable difference" }
+alpha = { value = 0.05, unit = "", source = "", note = "Two-sided" }
+power = { value = 0.80, unit = "", source = "", note = "" }

@@ -1,0 +1,68 @@
+\begin{longtable}{>{\raggedright\arraybackslash}p{4.2cm}rr>{\raggedright\arraybackslash}p{2.2cm}>{\raggedright\arraybackslash}p{5.4cm}l}
+\toprule
+Parameter & Value & Range & Unit & Note & Ref. \\
+\midrule
+\endhead
+population.london & 9{,}089{,}736 &  & persons & ONS mid-2024 estimate, Greater London & \cite{ons2025pop} \\
+population.uk & 69{,}281{,}437 &  & persons & ONS mid-2024 estimate, United Kingdom & \cite{ons2025pop} \\
+london.leggi\_total\_mt & 28.61 & 27.9--30.0 & MtCO2e/yr & LEGGI 2023 (interim, Dec 2025), territorial; 2021-2022 were 29.8-30.0 & \cite{leggi2025} \\
+london.consumption\_based\_mt & 87.95 & 80.7--88.0 & MtCO2e/yr & London consumption-based emissions 2022 (University of Leeds for GLA); 80.7 in 2021 & \cite{gla2024cbe} \\
+london.consumption\_food\_mt & 9.800 &  & MtCO2e/yr & Food within London's consumption-based emissions, 2022 & \cite{gla2024cbe} \\
+uk.territorial\_mt & 373.4 &  & MtCO2e/yr & UK territorial GHG emissions 2024 (final) & \cite{desnz2026ghg} \\
+uk.consumption\_mt & 699.2 &  & MtCO2e/yr & UK consumption footprint 2023 & \cite{defra2026footprint} \\
+uk.agriculture\_mt & 46.52 &  & MtCO2e/yr & UK agriculture 2024 & \cite{desnz2026ghg} \\
+uk.beef\_enteric\_mt & 11.33 &  & MtCO2e/yr & Enteric fermentation, beef cattle, 2024 (AR5) & \cite{desnz2026ghg} \\
+uk.beef\_manure\_mt & 2.680 &  & MtCO2e/yr & Manure management, beef cattle, 2024 (AR5) & \cite{desnz2026ghg} \\
+consumption.beef\_cwe\_kg\_per\_cap & 15.80 & 11.2--16.9 & kg cwe/person/yr & UK supply 2024: (929 + 307 - 142) kt / 69.3 M. High: FAO food balance 16.85 (2023). Low: consistent with NDNS beef intake 13.3 g/day as eaten & \cite{defra2025auk} \\
+consumption.dairy\_origin\_share & 0.5000 & 0.370--0.550 & fraction & About half of UK beef comes from the dairy herd & \cite{ciel2020} \\
+conversion.beef\_retail\_yield & 0.7000 & 0.620--0.740 & kg retail / kg cwe & Fat- and bone-free meat incl. edible offal = 72\% of carcass (Poore \& Nemecek Table S5); AAFC 0.73; closely trimmed boneless 0.62 & \cite{poore2018} \\
+conversion.beef\_cook\_yield & 0.6900 & 0.670--0.730 & kg cooked / kg raw & Beef mince <12\% fat, crumbles, pan-fried 0.69 (0.67-0.70); broiled patty 0.73 & \cite{showell2012} \\
+conversion.household\_waste\_frac & 0.1000 & 0.0600--0.140 & fraction of purchases & 10\% of red-meat purchases wasted (poultry 14\%, cheese 13\%, milk 8\%); applied to all foods & \cite{defra2010waste} \\
+emissions.beef\_post\_farm\_kg\_per\_kg & 3.000 & 2.00--4.50 & kgCO2e/kg retail & Processing, packaging, transport and retail; P\&N beef-herd post-farm = 2.89 & \cite{poore2018} \\
+emissions.pn\_beef\_herd & 99.48 &  & kgCO2e/kg retail & Global mean, beef herd (AR5 with feedbacks); median 60.36; 5th-95th 37.6-269 & \cite{poore2018} \\
+emissions.pn\_beef\_dairy & 33.30 &  & kgCO2e/kg retail & Global mean, dairy herd; median 34.14 & \cite{poore2018} \\
+emissions.pn\_uk\_beef\_herd & 48.40 &  & kgCO2e/kg retail & Poore \& Nemecek UK producers, to retail (quoted by CIEL) & \cite{ciel2020} \\
+emissions.pn\_uk\_beef\_dairy & 25.90 &  & kgCO2e/kg retail & Poore \& Nemecek UK producers, to retail (quoted by CIEL) & \cite{ciel2020} \\
+emissions.diet\_fp\_t\_per\_cap & 2.000 & 1.10--2.60 & tCO2e/person/yr & Average UK diet (LCA-based); London input-output estimate is 1.1 & \cite{scarborough2014} \\
+emissions.coc\_beef\_kg\_per\_kg\_carcass & 144.0 &  & kgCO2e/kg carcass & Carbon opportunity cost of land, beef (4\% discount); production adds 44 & \cite{searchinger2018} \\
+bioavailability.haem\_abs & 0.2500 & 0.150--0.350 & fraction & Haem iron absorption ~25\% (EFSA 2015; FAO/WHO 10-40\%) & \cite{efsa2015iron} \\
+bioavailability.nonhaem\_abs & 0.1000 & 0.0500--0.150 & fraction & Non-haem iron; whole mixed diets 14-18\%, vegetarian 5-12\% & \cite{hurrell2010} \\
+bioavailability.zinc\_abs\_animal & 0.3500 & 0.300--0.400 & fraction & Low-phytate diets: FAO/WHO 50/30/15\% at phytate:zinc <5/5-15/>15; IZiNCG 26-34\% mixed diets & \cite{fao2004vitmin} \\
+bioavailability.zinc\_abs\_mixed & 0.2500 & 0.200--0.300 & fraction & Moderate-phytate foods (tofu, fortified foods); mycoprotein ileal Zn absorption 24\% (Edwards \& Cummings 2010) & \cite{efsa2014zinc} \\
+bioavailability.zinc\_abs\_phytate & 0.1800 & 0.120--0.250 & fraction & Unrefined cereal / legume diets: IZiNCG 18\% (men), 25\% (women) & \cite{izincg2004} \\
+bioavailability.zinc\_abs\_supplement & 0.4000 & 0.300--0.500 & fraction & Zinc salts taken with a meal & \cite{efsa2014zinc} \\
+bioavailability.b12\_abs\_meat & 0.6000 & 0.500--0.700 & fraction & Mutton 56-89\%, chicken 61-66\% & \cite{watanabe2007} \\
+bioavailability.b12\_abs\_fish & 0.4200 & 0.350--0.500 & fraction & Trout 42\% & \cite{watanabe2007} \\
+bioavailability.b12\_abs\_egg & 0.09000 & 0.0400--0.200 & fraction & Egg B12 poorly absorbed (<9\%) & \cite{watanabe2007} \\
+bioavailability.b12\_abs\_dairy & 0.6500 & 0.500--0.700 & fraction & Milk B12 & \cite{watanabe2007} \\
+bioavailability.b12\_abs\_synthetic & 0.5000 & 0.400--0.600 & fraction & Cyanocobalamin in fortified foods/supplements at low doses & \cite{watanabe2007} \\
+bioavailability.b12\_abs\_none & 0 &  & fraction & No B12 &  \\
+imperial.students & 23{,}920 &  & headcount & 31 Dec 2025 & \cite{imperial2026stats} \\
+imperial.staff\_fte & 8{,}941 &  & FTE & 31 Dec 2025 & \cite{imperial2026stats} \\
+imperial.total\_ghg\_t & 247{,}453 &  & tCO2e/yr & 2024-25: scope 1 33,614; scope 2 12,056; scope 3 201,783 & \cite{imperial2025annual} \\
+imperial.scope12\_t & 45{,}670 &  & tCO2e/yr & 2024-25 scope 1 + 2 & \cite{imperial2025annual} \\
+imperial.catering\_ghg\_t & 2{,}097 &  & tCO2e/yr & 2023-24 spend-based: food 729, beverages 38, catering equipment/services 1,330 & \cite{imperial2024sust} \\
+campus.beef\_t\_per\_year & 9.500 & 8.00--10.6 & t product/yr & Taste Imperial beef purchases 2022/23 10.5 t, 2023/24 8.5 t (FOI) & \cite{imperialfoi} \\
+campus.beef\_kg\_per\_meal & 0.1200 & 0.100--0.140 & kg/meal & Standard meat portion before the 2024 cut to 100 g & \cite{imperial2026progress} \\
+campus.meals\_per\_year & 1{,}000{,}000 & 600{,}000--1{,}600{,}000 & main meals/yr & Tens of thousands of customers a day across >30 outlets; main meals only & assumption \\
+campus.frequent\_beef\_meals\_per\_week & 2.000 &  & meals/week & Illustrative frequent campus beef eater & assumption \\
+campus.switch\_concentration & 25.00 &  & Dirichlet concentration & Uncertainty around destination shares & assumption \\
+campus.switch.other\_meat & 0.5000 &  & share & Chicken, pork and wild venison (FOI purchase trends) & \cite{imperialfoi,merk2024} \\
+campus.switch.fish & 0.06000 &  & share &  & assumption \\
+campus.switch.vegetarian & 0.2000 &  & share & Vegetarian sales rose on no-beef days & \cite{merk2024,garnett2019} \\
+campus.switch.vegan & 0.1000 &  & share &  & assumption \\
+campus.switch.off\_campus\_beef & 0.07000 &  & share & Buy beef elsewhere (behavioural leakage) & \cite{russo2025,merk2024} \\
+campus.switch.off\_campus\_other & 0.07000 &  & share & Eat elsewhere, not beef & \cite{russo2025} \\
+welfare.meat\_nest\_share & 0.5500 & 0.450--0.650 & share of meals & Meat dishes incl. beef; Oxford baseline 61\% & \cite{pechey2022,garnett2019} \\
+welfare.nest\_lambda & 0.6000 & 0.300--1.00 &  & Nested-logit dissimilarity of the meat nest & assumption \\
+welfare.dish\_elasticity & \textminus 1.500 & \textminus 3.00--\textminus 0.800 &  & Own-price elasticity of a beef dish & \cite{garnett2021,salvi2025} \\
+welfare.meal\_price\_gbp & 6.000 & 4.50--7.50 & GBP & Campus hot meal & assumption \\
+welfare.outside\_option\_cost\_gbp & 3.000 & 1.50--5.00 & GBP & Time and price premium of buying a beef meal off campus & assumption \\
+carbon\_value.desnz\_central\_gbp & 277.2 & 139--416 & GBP(2022)/tCO2e & 2026 central, low and high series & \cite{desnz2023carbon} \\
+carbon\_value.epa\_scc\_usd & 215.0 &  & USD(2020)/tCO2 & 2026, 2\% discount rate & \cite{epa2023scghg} \\
+evaluation.zinc\_sd\_mg & 3.500 &  & mg/day & SD of usual zinc intake, young adults (approx.) & \cite{ndns2020} \\
+evaluation.detectable\_zinc\_mg & 0.5000 &  & mg/day & Minimum detectable difference & assumption \\
+evaluation.alpha & 0.05000 &  &  & Two-sided &  \\
+evaluation.power & 0.8000 &  &  &  &  \\
+\bottomrule
+\end{longtable}

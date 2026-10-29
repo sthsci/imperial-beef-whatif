@@ -1,0 +1,10 @@
+scenario,label,feasible,energy_ratio,max_shortfall,worst_nutrient
+meat_swap,Poultry & pork only,False,2.1311903877121265,0.5573361823361823,Vitamin B12 (absorbable)
+omnivore,"Omnivore, foods only",True,2.307599410570469,0.0,
+vegetarian,"Vegetarian, foods only",False,3.80369846391792,0.18610133738651066,Vitamin B12 (absorbable)
+vegan_fortified,Vegan incl. fortified foods,False,5.397615605436103,0.4907285732113929,Vitamin B12 (absorbable)
+vegan_wholefood,"Vegan, whole foods only",False,1.3731647453218057,1.0,Vitamin B12 (absorbable)
+eq_meat,Poultry/pork-led,True,1.2191367027222217,0.0,
+eq_fish,Fish-led,True,1.5821337589275868,0.0,
+eq_vegetarian,Dairy/egg-led,True,1.5887884294876773,0.0,
+eq_vegan,Plant-based,True,1.2500394296236963,0.0,

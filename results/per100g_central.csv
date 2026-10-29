@@ -1,0 +1,14 @@
+item,label,kg_co2e_per_100g,kind,kg_co2e_per_100g_pn,feasible
+uk_attr,Beef - UK supply mix (attributional),5.586109312817388,beef,,
+uk_conseq,Beef - UK supply mix (consequential),4.995832325024873,beef,,
+pn_mix,"Beef - Global mean, UK herd mix",10.69082125603865,beef,,
+pn_beef_herd,"Beef - Global mean, beef herd",16.019323671497588,beef,,
+eq_meat,Poultry/pork-led,0.9691833787683998,basket,0.9563896778076567,True
+eq_fish,Fish-led,1.5842991250964418,basket,1.5811470722845333,True
+eq_vegetarian,Dairy/egg-led,0.8080678250555967,basket,0.8044629126160268,True
+eq_vegan,Plant-based,0.36472740162502615,basket,0.1564360418407223,True
+meat_swap,Poultry & pork only,4.024146922164848,basket,4.024146922164848,False
+omnivore,"Omnivore, foods only",1.5933703812961122,basket,1.387037080200177,False
+vegetarian,"Vegetarian, foods only",1.4622707178645729,basket,1.2796076175720628,False
+vegan_fortified,Vegan incl. fortified foods,0.6860824449012733,basket,0.3300856030879893,False
+vegan_wholefood,"Vegan, whole foods only",0.3778757418023708,basket,0.1348893864507042,False

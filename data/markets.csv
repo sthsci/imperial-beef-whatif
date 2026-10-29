@@ -1,0 +1,21 @@
+# Food markets in the equilibrium displacement model (EDM).
+# q_kt: UK consumption, kt product (retail) weight per year. Only ratios between meat markets matter
+#   (cross-price terms); beef = 1,094 kt cwe (Defra AUK 2024: 929 + 307 - 142) x 0.70 retail yield.
+#   Other quantities are approximate (Defra AUK; FAO food balance) and affect results only through cross effects.
+# eta_sr / eta_lr: supply elasticities, short run (~1 yr) and long run (~10 yr), triangular (low, mode, high).
+#   US retail beef 0.36 SR / 4.62 LR, pork 0.73 / 3.87, poultry 0.18 / 13.1 (Schroeder & Tonsor 2011 in USDA 2015);
+#   SR beef 0.12, pork 0.15, chicken 0.06 (Suh & Moss 2017); EU/UK milk SR 0.2-0.3 (Jongeneel & Gonzalez-Martinez 2022).
+#   Long-run values are moderated for an integrated UK-Ireland-EU market; eggs/dairy calibrated to Norwood & Lusk (2011)
+#   production responses (eggs 0.91, milk 0.56); fish and plant foods are assumptions.
+# eps: Marshallian own-price demand elasticity. Beef -0.594 and pork -0.778 (Tiffin et al. 2011, UK);
+#   poultry/eggs/dairy from Andreyeva et al. (2010) meta-analysis means; lamb from Gallet (2010); fish/plant assumptions.
+market,default_food,q_kt,eta_sr_low,eta_sr,eta_sr_high,eta_lr_low,eta_lr,eta_lr_high,eps_low,eps,eps_high,source
+beef,beef_mince,766,0.10,0.25,0.40,0.6,2.0,4.6,-1.00,-0.594,-0.45,tiffin2011;usda2015cool;suh2017
+lamb,lamb,180,0.10,0.20,0.40,0.5,1.5,3.0,-1.20,-0.80,-0.50,gallet2010
+pork,pork_loin,1000,0.15,0.40,0.75,1.5,3.0,4.0,-1.10,-0.778,-0.55,tiffin2011;usda2015cool;suh2017
+poultry,chicken_breast,1500,0.06,0.20,0.40,2.0,5.0,13.1,-0.95,-0.68,-0.45,andreyeva2010;usda2015cool;suh2017
+fish,salmon,500,0.10,0.30,0.60,0.8,2.0,4.0,-0.90,-0.60,-0.40,andreyeva2010
+eggs,egg,780,0.10,0.30,0.50,1.0,3.0,6.0,-0.50,-0.27,-0.15,andreyeva2010;norwood2011
+dairy,cheddar,6000,0.10,0.20,0.30,0.5,1.0,2.0,-0.80,-0.50,-0.30,andreyeva2010;jongeneel2022;norwood2011
+plant,lentils,3000,0.50,1.00,2.00,2.0,5.0,10.0,-0.90,-0.60,-0.30,assumption
+venison,venison,5,0.30,0.50,1.00,1.0,2.0,4.0,-1.20,-0.80,-0.50,assumption

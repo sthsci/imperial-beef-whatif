@@ -1,0 +1,8 @@
+# Marshallian (uncompensated) cross-price elasticities, UK, 2009: row = quantity, column = price.
+# Tiffin et al. (2011), Defra, Table G.34 (unconditional, level 2). Negative values (complements) reflect the income effect.
+# Pairs not reported are set to zero.
+market,beef,lamb,pork,poultry
+beef,0,-0.012,-0.049,-0.084
+lamb,-0.009,0,0,0
+pork,-0.098,0,0,0
+poultry,-0.059,0,0,0

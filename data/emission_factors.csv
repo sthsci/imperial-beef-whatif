@@ -1,0 +1,33 @@
+# Emission factors, kg CO2e per kg AS PURCHASED (raw meat, dry pulses, whole eggs incl. shell, product as sold), cradle to retail.
+# ef_central: deterministic value. For foods covered by Poore & Nemecek (2018) this is their global MEAN (Data S2,
+#   retail weight, GWP100 AR5 incl. climate-carbon feedbacks) - deliberately conservative for UK-sourced alternatives.
+# ef_median/ef_low/ef_high: median and 5th/95th percentiles used to fit the Monte Carlo log-normal (P&N Data S2 where available).
+# ef_pn: Poore & Nemecek global mean (comparison column).
+# cook_yield: kg as eaten per kg as purchased: USDA cooking-yield tables (Showell et al. 2012) for meat, Bognar (2002) for
+#   pulses and frozen peas, derived from USDA raw/cooked records for chickpeas; edible share (0.88) for eggs; salmon assumed.
+# f_co2/f_ch4/f_n2o: GHG composition of the footprint (FAO GLEAM 2013 profiles; plant foods assumed), used only for metric conversion.
+# Beef is replaced in the model by the UK supply mix (data/beef_supply.csv); its row here is for completeness.
+food_id,ef_central,ef_median,ef_low,ef_high,ef_pn,cook_yield,f_co2,f_ch4,f_n2o,gwp_src,source,note
+beef_mince,34.7,34.7,24.0,52.0,66.39,0.69,0.20,0.58,0.22,AR5,beef_supply.csv,UK supply mix (overridden in model); ef_pn = 50:50 beef/dairy herd
+chicken_breast,9.87,7.52,3.95,20.82,9.87,0.73,0.61,0.06,0.33,AR5cc,poore2018,Poultry meat
+pork_loin,12.31,10.57,6.91,23.79,12.31,0.80,0.49,0.25,0.26,AR5cc,poore2018,Pig meat
+salmon,13.63,7.89,5.41,32.64,13.63,0.80,0.70,0.10,0.20,AR5cc,poore2018,Fish (farmed)
+egg,4.67,4.21,2.85,8.49,4.67,0.88,0.55,0.10,0.35,AR5cc,poore2018,Eggs; cook_yield = edible share of shell egg
+cheddar,23.88,18.64,10.21,58.79,23.88,1.00,0.30,0.50,0.20,AR5cc,poore2018,Cheese
+milk,3.15,2.65,1.51,7.00,3.15,1.00,0.30,0.50,0.20,AR5cc,poore2018,Milk
+tofu,3.16,2.58,1.41,7.27,3.16,1.00,0.65,0.05,0.30,AR5cc,poore2018,Tofu
+lentils,1.79,1.39,0.89,4.00,1.79,2.73,0.65,0.05,0.30,AR5cc,poore2018,Other pulses (dry weight)
+chickpeas,1.79,1.39,0.89,4.00,1.79,2.31,0.65,0.05,0.30,AR5cc,poore2018,Other pulses (dry weight)
+kidney_beans,1.79,1.39,0.89,4.00,1.79,2.50,0.65,0.05,0.30,AR5cc,poore2018,Other pulses (dry weight)
+peas,0.98,0.80,0.51,1.87,0.98,0.89,0.65,0.05,0.30,AR5cc,poore2018,Peas
+mycoprotein,1.89,1.89,1.26,2.60,,1.00,0.80,0.05,0.15,AR5,quorn2024,Quorn Mince farm-to-shop (Carbon Trust / ClimatePartner verified)
+pea_mince,2.00,2.00,0.90,4.00,,0.90,0.75,0.05,0.20,AR5,gfi2021;heller2018,Plant-based mince; 0.75-0.98 factory gate (GFI) to 3.2-3.5 (Beyond/Impossible)
+peanuts,3.23,3.29,1.42,6.15,3.23,1.00,0.65,0.05,0.30,AR5cc,poore2018,Groundnuts
+pumpkin_seeds,3.23,3.29,1.42,6.15,,1.00,0.65,0.05,0.30,AR5cc,poore2018,Proxy: groundnuts (no seed LCA in P&N)
+oats,2.48,2.59,0.80,4.30,2.48,1.00,0.65,0.05,0.30,AR5cc,poore2018,Oatmeal (dry weight)
+fortified_cereal,2.36,1.91,1.07,4.61,,1.00,0.70,0.05,0.25,AR5cc,poore2018,Proxy: P&N wheat (bread) x 1.5 for processing and packaging
+soy_drink,0.98,0.91,0.51,1.74,0.98,1.00,0.65,0.05,0.30,AR5cc,poore2018,Soymilk (per kg ~ per L)
+venison,3.00,3.00,1.00,12.00,,0.83,1.00,0.00,0.00,AR5,imperial2024beef,Wild-shot deer: processing and transport only (assumption; Imperial cites <1/3 of beef)
+lamb,39.72,40.61,23.70,60.16,39.72,0.72,0.20,0.55,0.25,AR5cc,poore2018,Lamb & mutton (EDM cross-effects only)
+b12_supplement,50.0,50.0,20.0,100.0,,1.00,1.00,0.00,0.00,AR5,assumption,Per kg of tablets (one tablet ~0.1 g)
+zinc_supplement,50.0,50.0,20.0,100.0,,1.00,1.00,0.00,0.00,AR5,assumption,Per kg of tablets (one tablet ~0.1 g)

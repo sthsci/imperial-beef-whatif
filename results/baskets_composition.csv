@@ -1,0 +1,41 @@
+scenario,label,food_id,amount
+meat_swap,Poultry & pork only,chicken_breast,171.22480030429818
+meat_swap,Poultry & pork only,pork_loin,84.91821985545837
+omnivore,"Omnivore, foods only",salmon,12.40693302997891
+omnivore,"Omnivore, foods only",milk,300.0
+omnivore,"Omnivore, foods only",lentils,140.23697450366987
+omnivore,"Omnivore, foods only",mycoprotein,84.75236519308741
+omnivore,"Omnivore, foods only",fortified_cereal,10.81271219127394
+vegetarian,"Vegetarian, foods only",milk,300.0
+vegetarian,"Vegetarian, foods only",lentils,147.63385302226703
+vegetarian,"Vegetarian, foods only",mycoprotein,83.57770972331917
+vegetarian,"Vegetarian, foods only",fortified_cereal,2.726660544994056
+vegetarian,"Vegetarian, foods only",soy_drink,112.08840527199693
+vegan_fortified,Vegan incl. fortified foods,lentils,4.6929199928434215
+vegan_fortified,Vegan incl. fortified foods,mycoprotein,94.23570766670038
+vegan_fortified,Vegan incl. fortified foods,pumpkin_seeds,29.49056993743034
+vegan_fortified,Vegan incl. fortified foods,fortified_cereal,19.93098696779321
+vegan_fortified,Vegan incl. fortified foods,soy_drink,300.0
+vegan_wholefood,"Vegan, whole foods only",lentils,81.47853277727076
+vegan_wholefood,"Vegan, whole foods only",kidney_beans,94.93965704773444
+vegan_wholefood,"Vegan, whole foods only",mycoprotein,115.70778826269841
+eq_meat,Poultry/pork-led,chicken_breast,54.41806451612903
+eq_meat,Poultry/pork-led,lentils,51.07418384442253
+eq_meat,Poultry/pork-led,chickpeas,118.08159731118882
+eq_meat,Poultry/pork-led,mycoprotein,4.341766363280969
+eq_meat,Poultry/pork-led,b12_supplement,0.31379742967741936
+eq_meat,Poultry/pork-led,zinc_supplement,0.4214008898931919
+eq_fish,Fish-led,salmon,76.33303167420813
+eq_fish,Fish-led,lentils,103.00311346437418
+eq_fish,Fish-led,kidney_beans,76.77583511583573
+eq_fish,Fish-led,b12_supplement,0.1564647095022625
+eq_fish,Fish-led,zinc_supplement,0.4739458528794144
+eq_vegetarian,Dairy/egg-led,egg,111.57142857142857
+eq_vegetarian,Dairy/egg-led,kidney_beans,184.2560553633218
+eq_vegetarian,Dairy/egg-led,b12_supplement,0.3137080285714286
+eq_vegetarian,Dairy/egg-led,zinc_supplement,0.4072744593425605
+eq_vegan,Plant-based,chickpeas,64.87659445171914
+eq_vegan,Plant-based,kidney_beans,126.42471820254684
+eq_vegan,Plant-based,mycoprotein,98.23594103808794
+eq_vegan,Plant-based,b12_supplement,0.33599999999999997
+eq_vegan,Plant-based,zinc_supplement,0.06317672086383022
